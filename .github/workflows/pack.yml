@@ -16,9 +16,10 @@ permissions:                                 # what the token may do in every jo
   contents: read                             # read the repository, nothing more
 
 env:                                         # the pins every job reads
-  # BONSAI_COMMIT: the Bonsai commit whose bonsai checks the pack, all 40 characters. Bonsai has no release yet, so
-  # the check job builds it from this commit; from Bonsai 1.0 its release archive, checked by its SHA-256, replaces it
-  BONSAI_COMMIT: "e1437d09832c86c7e6ae430b9336358e1706199a"
+  # BONSAI_COMMIT: the Bonsai commit whose bonsai checks the pack, all 40 characters: one that reads a pack's roles and
+  # its protocols folder, and holds the pack template this pack was made from. Bonsai has no release yet, so the check
+  # job builds it from this commit; from Bonsai 1.0 its release archive, checked by its SHA-256, replaces it
+  BONSAI_COMMIT: "c641c159c13a86fd0f52f57a001506a253a91597"
   CLAUDE_CODE_VERSION: "2.1.300"             # the Claude Code whose claude plugin validate checks the pack
 
 jobs:                                        # check, validate, then release
