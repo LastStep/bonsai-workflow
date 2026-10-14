@@ -1,47 +1,145 @@
-# The Bonsai pack template (`example-pack`)
+# workflow, a Bonsai pack
 
-A minimal, valid Bonsai pack: one role, one skill, one documented template, and the checks, CI and release every pack
-needs. A new pack starts as a copy of this folder in its own repository. Bonsai's own CI checks this folder on every
-Bonsai commit with the same script a pack's CI runs, so the template stays in step with Bonsai.
+A way of working for AI agents in a software or game project, as a [Bonsai](https://github.com/LastStep/Bonsai) pack:
+six roles in two kinds, three lanes each running its pipeline, the protocols every agent follows, and the templates
+of the documents they write. It is a Claude Code plugin (its roles and skills) with a `bonsai/` folder (what Bonsai's
+engine reads when a project links the pack). It carries no code that runs.
 
-A **pack** is a Claude Code plugin (its roles, skills and any hooks or servers, which Claude Code loads) plus a
-`bonsai/` folder, which Bonsai's engine reads when a project links the pack (`bonsai init`, `bonsai update`): who the
-pack is, what it writes into a project, and what it declares. Claude Code never reads `bonsai/`; Bonsai never reads
-Claude Code's plugin cache.
+**Where it came from.** It is Rohan Yadav's way of working: the roles, protocols and templates of his game studio as
+they stood on 9 Oct 2026, rewritten for Bonsai's formats and commands, and redesigned on 14 Oct 2026 around six roles,
+a message format between agents and limits per role. The game wording stays (players, play sessions, "is it fun"):
+it is a game studio's workflow, and it works the same for other software.
 
-## Start a pack from this template
+## What a project gets
 
-1. Copy this folder, `.github/` and `.gitattributes` included, to the top of a new git repository.
-2. Choose the pack's id: a lower-case letter, then lower-case letters, digits and dashes, never `bonsai`. Put it in
-   place of `example-pack` everywhere: `grep -rn example-pack .` lists each place (`plugin.json`'s `name`,
-   `pack.yaml`'s `id`, `labels.yaml`'s `namespace` and label names, the role's `skills:` line, the skills' text).
-3. Replace the example role, skill, document kind, label and deny rule with the pack's own, keeping every file
-   documented as below, and give each new role or skill file its row under "Role and skill files".
-4. In `.github/workflows/pack.yml`, check `BONSAI_COMMIT` (the Bonsai the pack is checked with) and
-   `CLAUDE_CODE_VERSION`; move either only on purpose.
-5. Run the checks locally (below), commit and push: the pack's CI runs them on Linux and Windows.
+- **Six roles** (`agents/`), loaded as `workflow:<role>`. **Leads** own the work: the `orchestrator` (the session the
+  person talks to), the `builder` and the `verifier`. **Helpers** are shared, and call no one: the `researcher` (the
+  web), the `auditor` (the project's own code, documents and data) and the `runner` (long or mechanical runs).
+- **Three lanes and their pipelines** (`skills/lanes/`): light work runs Build; a feature (full) runs Plan, then
+  Build; a decision (director) runs Decide.
+- **The protocols, as skills**: the session-start checklist every session reads (the one always-on file), and
+  `lanes`, `verification-ladder`, `reward-hacking-guards`, `reporting` and `adr`, read when a role needs them.
+- **The orchestrator's skills**: `orchestrate` (its work), `brief` (the producer's work and the person's daily brief)
+  and `interview` (after a play session). **The verifier's**: `lenses`.
+- **Eight document kinds**, each with a documented template: plans, one-pagers (`feature`), decision records, options
+  write-ups, specs, playtests, daily briefs and the bugs register.
+- **Six labels** (`workflow.owner`, `workflow.model`, `workflow.feature`, `workflow.milestone`, `workflow.spec`,
+  `workflow.estimate_h`) and **walls** for a studio's own secret files.
 
-A project then links the pack by its repository and a tag or commit, for example `bonsai init --name demo --source
-https://github.com/<owner>/<repo> --ref v0.1.0 --yes`.
+It is meant to be used with `base`, Bonsai's own pack, which holds the templates for Bonsai's documents (a task, a run
+report, STATE, a memory note, a message between agents) that these roles write.
+
+## How a project takes it
+
+A first link, with no `bonsai.yaml` yet (a person's command, in the project's checkout):
+
+```sh
+bonsai init --name <project> --source https://github.com/LastStep/bonsai-workflow --ref <40-character commit> --yes
+```
+
+A project already linked adds the pack as an entry in its `bonsai.yaml`, after `base`:
+
+```yaml
+packs:
+  - id: workflow                      # the pack
+    source: "https://github.com/LastStep/bonsai-workflow.git"   # where it is fetched from
+    path: null                        # the pack is at its repository's top
+    ref: "<40-character commit>"      # the exact commit
+    roles: null                       # this project's limits for the pack's roles; null keeps the pack's
+```
+
+then runs `bonsai update`, which previews every change. Because the pack declares roles, a Bonsai that enforces them
+writes two guard lines for them (one that also judges the calls that start agents, and one on every other tool): a
+change to Bonsai's own hook lines, so the person types `bonsai update --allow-exec --yes` themselves. A first link
+writes them with `--yes`.
+
+**Its own limits.** Each role has three limits: `minutes` (since the agent's first call, or since it read its newest
+brief), `actions` (tool calls, refused ones counted) and `red_runs` (failed ladder runs in a row). Each has a
+`default` (what an agent gets when its brief names none) and a `max` (the most a brief may give it). The pack ships
+each max equal to its default, so a brief can lower a limit but not raise it; a project raises a max in its own
+`bonsai.yaml` before any brief can give more, at any time (it is not a loosening of the checks):
+
+```yaml
+    roles:                            # under the pack's entry
+      builder:                        # a role the pack declares
+        minutes:                      # minutes since its first call, or since it read its newest brief
+          default: 240                # what a builder gets when its brief names none
+          max: 480                    # the most a brief may give it
+```
+
+`bonsai status --json` lists each role's limits in force and where each came from (`roles`). Claude Code's own stop,
+the role file's `maxTurns`, sits above them: a project's max of actions past a role's `maxTurns` meets Claude Code's
+stop first, and `bonsai check` warns about it.
+
+## The always-on file
+
+`bonsai/files/session-start.md` is written into the project's protocols folder (`documents.protocols` in its
+`bonsai.yaml`, `work/protocols` unless the project changed it) and imported by the block in `CLAUDE.md`, so every
+session and every agent reads it. It says: what you are (a session the person talks to is the **orchestrator**, which
+opens `workflow:orchestrate` when work starts; a quick question is answered as it is, and "do this one yourself" from
+the person is done in that session; a session started as a role is that role; an agent started by a call reads its
+brief first), what to read and in what order, the lane, the ground, the run report, and what to do before you stop.
+It stays at or under 4.6 KB, its docs one comment line pointing here.
+
+## The roles
+
+| Kind | Roles | May call | Changes files |
+|---|---|---|---|
+| The person's session | `orchestrator` | any lead or helper | yes: plans, tasks, records |
+| Lead | `builder`, `verifier` | helpers only | the builder its task's files; the verifier nothing |
+| Helper | `researcher`, `auditor`, `runner` | no one | nothing |
+
+**How each starts.** The orchestrator is a plain `claude` in the project (the always-on file tells it what it is), or
+`claude --agent workflow:orchestrator` to take over from another orchestrator or to run an interview in a fresh
+session. Every other role is started by the orchestrator, never by another role: through the Agent tool
+(`subagent_type: workflow:<role>`) with its brief's id in the prompt, or as a named session (`claude -p --agent
+workflow:builder` with `BONSAI_TASK` and `BONSAI_ROLE` set). A lead starts helpers the same way. Bonsai's guard holds
+who may call whom, refuses every file edit to a role that changes nothing, and stops an agent past its limits but for
+its report; `skills/reporting/` tells each role what it does then.
+
+**Briefs and reports** between agents are messages, written with `bonsai message` (templates: `base:message`): a
+brief says what the recipient lacks, the objective, the output's shape and the boundaries; a report gives a status
+(`done`, `blocked`, `needs-input`) and points to files rather than retelling them.
+
+## The three pipelines
+
+`skills/lanes/SKILL.md` holds them in full. In short: **Plan** (the full lane; a change that fits in one sentence
+skips it): an auditor and a researcher look, the person answers questions one at a time, the orchestrator writes the
+plan, a verifier's facts lens checks it, the person approves. **Build**: the task, a builder (with its helpers), the
+ladder green, verifier lenses by risk (light work: the orchestrator reads the diff), landed, and the person looks if
+it is something they see. **Decide** (the director lane): a researcher and an auditor, two to four options with one
+recommended, the person chooses, a decision record.
+
+## Where each list lives
+
+None is copied here:
+- the roles, their kinds and their limits: `bonsai/pack.yaml`, `roles`;
+- each role's preloaded skills: its own file's `skills:` line;
+- the lanes and their two rules: `bonsai/lanes.yaml`; what lands in each, and the pipelines: `skills/lanes/SKILL.md`;
+- the labels: `bonsai/labels.yaml`;
+- the document kinds, their folders, ids, statuses and moves: `bonsai/pack.yaml`, `documents`; each kind's fields:
+  its template skill's fields table;
+- the walls: `bonsai/pack.yaml`, `deny`, each rule with its `why`.
+
+`bonsai check --schema bonsai.pack` (and `bonsai.labels`, `bonsai.lanes`) prints every field of those formats.
 
 ## The folder
 
 | File | What it is |
 |---|---|
-| `.claude-plugin/plugin.json` | The plugin manifest Claude Code reads. JSON holds no comments, so it is documented here, under "plugin.json" |
-| `agents/` | The pack's roles, one file each; a role loads as `<id>:<name>` (`example-pack:example`) |
-| `skills/` | The pack's skills, one folder each with its `SKILL.md`, to the open Agent Skills standard; a skill loads as `<id>:<name>` |
-| `bonsai/pack.yaml` | The Bonsai manifest (format `bonsai.pack/1`): id, version, needs, what the engine writes into a project, and the pack's document kinds, protected paths and roles. A `#` comment on every key documents it |
-| `bonsai/labels.yaml` | The labels the pack defines (format `bonsai.labels/1`), in its own namespace. A `#` comment on every key |
-| `ci/check.sh` | Every check the pack has, in one script; its header documents each subcommand and argument |
-| `.github/workflows/pack.yml` | The pack's CI and release, calling `ci/check.sh`. A `#` comment on every key |
-| `.gitattributes` | Every file is text with LF line endings on every checkout, Windows included, so `sh ci/check.sh` runs there |
+| `.claude-plugin/plugin.json` | The plugin manifest Claude Code reads; documented below, under "plugin.json" |
+| `agents/` | The six roles, one file each, loaded as `workflow:<name>` |
+| `skills/` | The skills, one folder each with its `SKILL.md`, to the open Agent Skills standard, loaded as `workflow:<name>` |
+| `bonsai/pack.yaml` | The Bonsai manifest (format `bonsai.pack/1`): id, version, needs, the always-on file, the walls, the document kinds and the roles with their limits |
+| `bonsai/labels.yaml` | The six labels (format `bonsai.labels/1`), in the namespace `workflow` |
+| `bonsai/lanes.yaml` | The three lanes (format `bonsai.lanes/1`) |
+| `bonsai/block.md` | The pack's part of the instruction block in a project's `CLAUDE.md` |
+| `bonsai/files/session-start.md` | The always-on protocol, written into the project's protocols folder |
+| `ci/check.sh` | Every check the pack has, in one script; its header documents each subcommand |
+| `.github/workflows/pack.yml` | The pack's CI and release, calling `ci/check.sh` |
+| `.gitattributes` | Every file is text with LF line endings on every checkout, Windows included |
+| `LICENSE` | MIT |
 | `README.md` | This page |
-
-Where each list lives (none is copied here): the document kinds, the deny rules (the walls) and the roles with their
-limits in `bonsai/pack.yaml`; the labels in `bonsai/labels.yaml`; a role's preloaded skills on its own `skills:` line;
-lanes, in a pack that has them, in `bonsai/lanes.yaml`. `bonsai check --schema bonsai.pack` (and `bonsai.labels`,
-`bonsai.lanes`) prints every field of those formats with its allowed values.
 
 ## Role and skill files
 
@@ -49,56 +147,112 @@ Each file in `agents/` and `skills/` has one row here, and each row names a file
 
 | File | What it is |
 |---|---|
-| `agents/example.md` | The role `example-pack:example`: it keeps the project's notes. Declared in `bonsai/pack.yaml`'s `roles` with its limits |
-| `skills/example/SKILL.md` | The skill `example-pack:example`, no template: how to keep a note. The role preloads it |
-| `skills/note/SKILL.md` | The skill `example-pack:note`, the template of the document kind `note`: its fields table and the template to copy |
+| `agents/orchestrator.md` | The orchestrator: the session the person talks to. Thin: its work is in `skills/orchestrate/` |
+| `agents/builder.md` | The builder, a lead: one task in its own worktree, the ladder climbed, a report with its branch's HEAD |
+| `agents/verifier.md` | The verifier, a lead: one lens a run, in a fresh context, pass or fail with evidence; fixes nothing |
+| `agents/researcher.md` | The researcher, a helper: one question from the web, every claim linked and quoted; the options for a decision |
+| `agents/auditor.md` | The auditor, a helper: one scoped question about the project, file-and-line evidence, found kept apart from not found |
+| `agents/runner.md` | The runner, a helper: runs what its brief names and returns counts, failing names, exit codes and a log's path |
+| `skills/orchestrate/SKILL.md` | The orchestrator's work: the pipelines it runs, briefs and reports, landing, the hand-over past a heavy context |
+| `skills/lanes/SKILL.md` | The three lanes, their pipelines, what an agent decides alone, how a decision reaches the person |
+| `skills/verification-ladder/SKILL.md` | The ladder: climbing it with `bonsai ladder`, its rules, the three-failures circuit breaker, what done means |
+| `skills/reward-hacking-guards/SKILL.md` | What counts as gaming the checks, and what to do instead |
+| `skills/reporting/SKILL.md` | Reports to the person and between agents, their statuses, and what to do when a budget is spent or a call refused |
+| `skills/adr/SKILL.md` | When a choice deserves a decision record, where it goes and its shape |
+| `skills/lenses/SKILL.md` | The verifier's four lenses: tests and correctness, QA, security, facts |
+| `skills/brief/SKILL.md` | The producer's work (STATE, the daily brief, triage, lanes, the date), with the template of the kind `brief` |
+| `skills/interview/SKILL.md` | The interview after a play session, in a fresh session: its six questions and rules, the write-up, proposed tasks |
+| `skills/plan/SKILL.md` | The template of the kind `plan`: how one task will be built |
+| `skills/feature/SKILL.md` | The template of the kind `feature`: a one-pager, what a player gets |
+| `skills/decision/SKILL.md` | The template of the kind `decision`: a decision record |
+| `skills/options/SKILL.md` | The template of the kind `options`: an options write-up for the person's decision |
+| `skills/spec/SKILL.md` | The template of the kind `spec`: a design bigger than one feature |
+| `skills/playtest/SKILL.md` | The template of the kind `playtest`: one play session's record |
+| `skills/bugs/SKILL.md` | The template of the kind `bugs`: the project's register of known bugs |
+
+**What each role preloads**, and why its body names those skills too: each role file lists its skills on its
+`skills:` line by the plugin's name (`workflow:lanes`). Measured on Claude Code 2.1.300: a role started as a subagent
+through the Agent tool gets them preloaded (the bare `lanes` form loaded too); a session started as
+`claude --agent workflow:<role>` gets none, in either form. So each role's body names the skills to open when they are
+not already loaded, and the orchestrator's body says it in so many words. The same measurement found `maxTurns`
+honoured for a subagent (its caller gets the partial output, marked as cut at the limit) and not applied to an
+`--agent` session.
 
 ### How each kind of file documents itself
 
-Every file a pack ships says its purpose, when to use it, and every field: its meaning, its allowed values (or where
+Every file the pack ships says its purpose, when to use it, and every field: its meaning, its allowed values (or where
 the list is defined) and an example.
 
 - **A YAML file** (`pack.yaml`, `labels.yaml`, `lanes.yaml`, `pack.yml`): a short header, and a `#` comment on every
   key, at its line's end or on the line just above. `bonsai check --pack` fails a key in `bonsai/` without one.
-- **A template skill**: a fields table, `| Field | Meaning | Allowed values | Example |`, above its template, the first
-  fenced block after the table. `bonsai check --pack` holds the table and the template's fields equal, both ways, and
-  each allowed-values cell that lists values to the pack's own list (a document kind's statuses, a choice label's
-  values). It knows a template skill only by that table: a template written without one is not checked at all.
-- **A role file, and a skill that is no template**: an HTML comment just after the frontmatter, a line or two (its
-  purpose, when it is used, where its fields are documented). The body is read into the session, so the comment stays
-  short and the fields are documented once, below.
+- **A template skill** (`plan`, `feature`, `decision`, `options`, `spec`, `playtest`, `bugs`, and `brief` after its
+  procedure): a fields table, `| Field | Meaning | Allowed values | Example |`, above its template, the first fenced
+  block after the table. `bonsai check --pack` holds the table and the template's fields equal, both ways, and each
+  allowed-values cell that lists values to the pack's own list (a kind's statuses, the lanes, a choice label's
+  values). A document made from a template keeps only the pointer comment on its first line.
+- **A role file, and a skill that is no template**: an HTML comment just after the frontmatter, a line or two. The
+  body is read into the session, so the comment stays short and the fields are documented once, below.
+- **The always-on file and the block**: one comment each (the block's stays in the pack); the rest is on this page.
 - **`ci/check.sh`**: its header. **`plugin.json`**: this page.
 
 ### Role files: frontmatter fields
 
 | Field | Meaning | Allowed values | Example |
 |---|---|---|---|
-| `name` | The role's name; the file is `agents/<name>.md`, and the role loads as `<id>:<name>` | a lower-case letter, then lower-case letters, digits and dashes | `example` |
-| `description` | When to use the role, as Claude Code shows it to the caller choosing an agent | one line of text, quoted | `"Keeps the project's notes: ..."` |
-| `model` | The model Claude Code runs the role on; a caller may name another for one call | a Claude Code model alias (`opus`, `sonnet`, `haiku`), a full model id, or `inherit` (the caller's) | `sonnet` |
-| `skills` | The skills loaded into the role's context when it starts, each by its name as the plugin loads it | a list of skill names | `[example-pack:example]` |
-| `maxTurns` | Claude Code's limit on the role's turns: a backstop where Bonsai's guard does not run (hooks turned off), never the limit itself | a whole number, equal to the role's `max_turns` in `bonsai/pack.yaml` | `200` |
-
-The role's body names the skills it reads as well, so a route that ignores `skills:` still finds them.
+| `name` | The role's name; the file is `agents/<name>.md`, and the role loads as `workflow:<name>` | a lower-case letter, then lower-case letters, digits and dashes | `builder` |
+| `description` | When to use the role, as Claude Code shows it to a caller choosing an agent: short, and distinct from the others' | one line of text, quoted | `"Builds one task in its own worktree, ..."` |
+| `model` | Claude Code's model for the role's tier (deep `opus`, standard `sonnet`, fast `haiku`); a caller may name another for one call | a Claude Code model alias, a full model id, or `inherit` | `opus` |
+| `skills` | The skills loaded into the role's context when it starts as a subagent, each by the name the plugin loads it as | a list of skill names | `[workflow:lanes, workflow:reporting]` |
+| `maxTurns` | Claude Code's limit on the role's turns: a backstop where Bonsai's guard does not run, never the limit itself; the orchestrator has none | a whole number, equal to the role's `max_turns` in `bonsai/pack.yaml` (four times its default actions) | `2400` |
 
 ### Skill files: frontmatter fields
 
 | Field | Meaning | Allowed values | Example |
 |---|---|---|---|
-| `name` | The skill's name; the folder is `skills/<name>/`, and the skill loads as `<id>:<name>` | a lower-case letter, then lower-case letters, digits and dashes | `note` |
-| `description` | What the skill holds and when to open it: Claude reads it to decide whether to load the skill | one line of text, quoted | `"The note template: ..."` |
+| `name` | The skill's name; the folder is `skills/<name>/`, and the skill loads as `workflow:<name>` | a lower-case letter, then lower-case letters, digits and dashes | `lanes` |
+| `description` | What the skill holds and when to open it: Claude reads it to decide whether to load the skill | one line of text, quoted | `"Lanes and authority: ..."` |
 
 ## plugin.json
 
 | Field | Meaning | Allowed values | Example |
 |---|---|---|---|
-| `name` | The plugin's name, which Claude Code puts before every role and skill (`example-pack:example`) | the pack's id, exactly as `bonsai/pack.yaml`'s `id` | `"example-pack"` |
-| `description` | What the pack is, in a sentence, as Claude Code's plugin lists show it | text | `"The Bonsai pack template: ..."` |
+| `name` | The plugin's name, which Claude Code puts before every role and skill (`workflow:builder`) | the pack's id, exactly as `bonsai/pack.yaml`'s `id` | `"workflow"` |
+| `description` | What the pack is, in a sentence, as Claude Code's plugin lists show it | text | `"A way of working for Claude Code agents, ..."` |
 | `author` | Who makes the pack | an object; `name` is the maker's name | `{"name": "Bonsai"}` |
+| `repository` | Where the pack's source lives | a URL | `"https://github.com/LastStep/bonsai-workflow"` |
+| `license` | The pack's license | an SPDX license id | `"MIT"` |
 
-Claude Code reads other optional fields (`homepage`, `repository`, `license`, `keywords`, and the folders of
-components); add one only with its row here. **Never add `version`** (below). Hooks, MCP or LSP servers and monitors
-in `plugin.json` or beside it are code (below).
+**Never add `version`** (below). Hooks, MCP or LSP servers and monitors in `plugin.json` or beside it would be code
+that runs, which this pack carries none of.
+
+## The block
+
+`bonsai/block.md` is the pack's part of the instruction block Bonsai writes into a linked project's `CLAUDE.md`, after
+the label lines: two lines naming the roles and how each starts, the lanes, and the templates. Every session reads
+it, so it stays at most four lines; its own comment stays in the pack. With `base`'s block, the label lines and the
+imports, the whole block is 20 lines (measured on a project linked to both; Bonsai's cap is 40); linked alone, 14.
+
+## Document kinds and their folders
+
+`bonsai/pack.yaml`'s `documents` gives each kind a default place under `work/`, which `bonsai init` writes into the
+project's `bonsai.yaml`; a project moves any of them there. Options write-ups have a kind of their own, apart from
+decision records, since one kind has one list of statuses. **Two kinds in one folder** (a project pointing both
+`decision` and `options` at one folder): tried at Bonsai's commit `c641c15` in a scratch project holding a record and
+a write-up there, and `bonsai init`, `bonsai check`, `bonsai status` and `bonsai ask --doc` all accepted it; their id
+patterns (`ADR-`, `OPT-`) keep the two apart.
+
+Moves follow Bonsai's rule for documents: a person approves (a plan, a one-pager, a spec), accepts (a decision
+record), decides (an options write-up), closes and cuts; agents make the rest. Where a project's status moves go
+through a command (`status_writes: command` in `bonsai status --json`), agents make theirs through it.
+
+## The walls
+
+`bonsai/pack.yaml`'s `deny` stops Claude's file tools reading a studio's three secret files, `~/.trinetra/token`,
+`deploy_ed25519` and `salt`: in the session's own home, in the Windows home seen from WSL (`//mnt/c/Users/*/`), and in
+a WSL home seen from Windows (`//wsl.localhost/*/home/*/` and `//wsl$/*/home/*/`). `base` cannot name them, since it
+names no studio. The rules name the files; nothing secret is in the pack. A deny rule stops the file tools and simple
+shell reads, not a program reading its own file, nor a script. The two forms for a WSL home seen from Windows are
+the first to try; each rule is tried on both sides, and one that does not hold is replaced or written here.
 
 ## Versions and releases
 
@@ -106,112 +260,37 @@ in `plugin.json` or beside it are code (below).
   commit and refuses a tag that later moves. The commit is the version Claude Code sees: with a `version` in
   `plugin.json`, Claude Code would keep each machine on its cached copy whatever the commit, so `plugin.json` never
   carries one, and `claude plugin validate --json` warns about that one thing, which `ci/check.sh` allows.
-- **`bonsai/pack.yaml`'s `version` names tags only.** A release is a tag `v` and that version (`v0.1.0`); nothing is
-  uploaded, since a pack is fetched by commit. To release: raise `version`, commit, push, then tag that commit
-  `v<version>` and push the tag. The CI checks everything again, checks that the tag equals the version, and makes the
-  GitHub release with its notes.
-- **Adopting a release is a person's step** in each project: change the tag in `bonsai.yaml` and run `bonsai update`,
+- **`bonsai/pack.yaml`'s `version` names tags only.** A release is a tag `v` and that version (`v0.1.0`). To release:
+  raise `version`, commit, push, then tag that commit `v<version>` and push the tag. The CI checks everything again,
+  checks that the tag equals the version, and makes the GitHub release with its notes.
+- **Adopting a release is a person's step** in each project: change the ref in `bonsai.yaml` and run `bonsai update`,
   whose preview says what changes.
 
-## What makes a pack run code
+## It carries no code
 
-A pack runs code when it carries a part Claude Code or a shell runs on its own, without an agent's call: a hook line
-in `bonsai/pack.yaml`'s `hooks`, a pack file such a line runs, or a part of the plugin itself (hooks, MCP or LSP
-servers, monitors, a mod). Roles, skills and commands are prompts, not code. A pack with code is asked for on each
-machine: `bonsai init` and `bonsai update` write its hook lines and install its plugin only with `--allow-exec` as
-well as `--yes`, typed by a person; a pack without code, like this one, links with `--yes` alone.
-
-`--allow-exec` gates Bonsai's own install of the plugin. In a scripted session Claude Code was seen installing a pack's
-plugin from the project's settings by itself and running its hook before any `bonsai update --allow-exec`, so keep code
-out of a pack unless it needs it.
-
-### Adding a hook line
-
-A `hooks` entry in `bonsai/pack.yaml` (the field docs: `bonsai check --schema bonsai.pack`):
-
-```yaml
-hooks:                                # hook lines the engine writes into .claude/settings.json
-  - event: SessionStart               # the Claude Code hook event
-    matcher: startup                  # its matcher, or null
-    command: "sh example-pack/greet.sh"   # the shell line; never calls bash by name
-    runs: ["example-pack/greet.sh"]   # every pack file the line runs, by its path in the project
-    why: "Prints the project's greeting when a session starts; it blocks nothing."   # the preview's sentence
-```
-
-The file it runs is a `files` entry (`path: example-pack/greet.sh`, `from: greet.sh`, `kind: pack`) with its source in
-`bonsai/files/`. A plugin's own hooks go in `hooks/hooks.json` (or inline in `plugin.json`), not in a file named from
-there, so `bonsai check --pack` reads every command in them.
-
-### Adding an always-on file
-
-A file every session loads goes in the project's protocols folder, which the instruction block imports: a `files`
-entry whose path starts `<protocols>/`, the engine putting it in the folder the project's `bonsai.yaml` names.
-
-```yaml
-files:                                # the files the engine writes into a project
-  - path: "<protocols>/example-start.md"   # into the project's protocols folder, loaded in every session
-    from: example-start.md            # its source, bonsai/files/example-start.md
-    kind: pack                        # Bonsai's file: an edit in the project is a conflict
-```
-
-It is read in every session, so it keeps its docs to one HTML comment line pointing here, with the rest in this page.
-The same holds for `block` (`bonsai/block.md`), the pack's part of the block in the project's `CLAUDE.md`.
-
-## Roles and their limits
-
-Each role is a file in `agents/` and an entry in `bonsai/pack.yaml`'s `roles`: its `kind` (`lead`, which may call
-helpers, or `helper`, which calls no one), `session` (true only for the role a person's own session plays),
-`writes` (false: Bonsai's guard refuses it every file edit), `max_turns`, and three limits, `minutes`, `actions` and
-`red_runs`, each with a `default` (what an agent of the role gets when its brief names none) and a `max` (the most a
-brief may give it). The pack ships each max equal to its default; a project sets its own default and max for any limit
-under the pack's entry in its `bonsai.yaml`.
-
-- The role file's `maxTurns` equals the role's `max_turns` (`bonsai check --pack` holds them equal). It is a generous
-  backstop, about four times the default actions: Bonsai's guard enforces the limits, and `maxTurns` only stops an
-  agent where the guard does not run.
-- A pack that declares roles brings Bonsai's two guard lines for them into a project. A first link writes them with
-  `--yes`; adding the pack to a project already linked changes Bonsai's own guard, so it needs `--allow-exec`, a
-  person's.
-
-## Deny rules
-
-Each `deny` entry in `bonsai/pack.yaml` is a Claude Code permission rule with its `why`, the sentence `bonsai update`'s
-preview prints. Write a project path from the project's top with a leading `/` (`Read(/example-pack/secret.txt)`), or
-from the disk's root with `//` (`Read(//**/example.key)`): a relative rule, such as `Read(example-pack/secret.txt)`,
-does not hold after a shell `cd`.
+Roles, skills and templates are prompts and text, not code: the pack has no hook lines (`hooks: []`), no plugin hooks,
+MCP or LSP servers, monitors or mods, and no script a skill runs. So a first link needs `--yes` alone. Bonsai's own
+guard lines, which the pack's roles bring, are Bonsai's, not the pack's.
 
 ## Checks, CI and release
 
 `ci/check.sh` is the one home of the pack's checks (its header documents each subcommand):
 
-- `sh ci/check.sh check <bonsai> <folder> <source> <commit> [<path>]`: `bonsai check --pack` on the folder; this page's
-  rows against `agents/` and `skills/`; a scratch project linked to the pack at the commit, with `claude` off the PATH;
-  `bonsai check` there. Run locally from the pack's top with the commit to check (committed work only):
-  `sh ci/check.sh check "$(command -v bonsai)" . . "$(git rev-parse HEAD)"`.
+- `sh ci/check.sh check <bonsai> <folder> <source> <commit> [<path>]`: `bonsai check --pack` on the folder (the
+  declarations, every comment, each template against its fields table, each role against its file, the block's
+  length); this page's rows against `agents/` and `skills/`; a scratch project linked to the pack at the commit, with
+  `claude` off the PATH; `bonsai check` there. Run locally from the pack's top with the commit to check (committed
+  work only): `sh ci/check.sh check "$(command -v bonsai)" . . "$(git rev-parse HEAD)"`.
 - `sh ci/check.sh validate <folder>`: `claude plugin validate --json`, failing on every error and warning but the
-  missing `version`. It needs no Claude login (measured with an empty Claude configuration folder and no key), so it
-  runs in CI with no secret.
-- `sh ci/check.sh release <tag> <folder>`: fails unless the tag is `v` and `pack.yaml`'s `version`. It reads no git tag,
-  so it can be tried with any name: `sh ci/check.sh release v0.1.0 .`.
+  missing `version`. It needs no Claude login, so it runs in CI with no secret.
+- `sh ci/check.sh release <tag> <folder>`: fails unless the tag is `v` and `pack.yaml`'s `version`.
 
-`.github/workflows/pack.yml` runs on every push and pull request, a fork's included (it uses no secret): `check` on
-Linux and Windows with a bonsai built from `BONSAI_COMMIT`; `validate` on Linux with the pinned Claude Code; then
-`release`, which checks the tag the version needs on every push and, on a `v*` tag only, makes the GitHub release.
+`.github/workflows/pack.yml` runs on every push and pull request: `check` on Linux and Windows with a `bonsai` built
+from the Bonsai commit it pins (`BONSAI_COMMIT`, one that reads `roles` and the protocols folder); `validate` on Linux
+with the Claude Code it pins; then `release`, which checks the tag the version needs on every push and, on a `v*` tag
+only, makes the GitHub release. Either pin moves only on purpose, in a commit of its own.
 
 ### On Windows
 
 Before a `bonsai update` that installs a plugin, open one Claude Code session first, so its login is fresh: a plugin
 install meeting a run-out access token has signed the person out of Claude Code.
-
-## Evals
-
-A pack may ship eval cases for `claude plugin eval` under `evals/`, one folder per case (a `prompt.md` with its
-`graders/*.md`, or a `case.yaml`; `claude plugin eval init --bare <name>` writes a blank one). They call a model, so
-they run on a maker's machine, never in CI:
-
-```sh
-claude plugin eval . --no-publish --trust-plugin --model haiku --judge-model haiku --runs 2 --max-cost-usd 2 --json
-```
-
-Give the target as a path: by name it is refused when several installed plugins share it. Read the report's
-`runsPerCase` with care: it has shown the default (3) when `--runs 2` ran two runs per arm.
