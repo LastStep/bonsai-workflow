@@ -13,9 +13,9 @@ id: workflow
 # carries one: a project pins the pack by commit, and that commit is the version Claude Code sees
 version: "0.1.0"
 needs:                                # what a machine needs for the pack; bonsai status --json lists each
-  # claude_code: the oldest Claude Code the pack works with: the version its roles' skills: preloads and maxTurns
-  # were measured on (README.md, "Role files"); an older one gets a check warning, never a refusal
-  claude_code: "2.1.300"
+  # claude_code: the oldest Claude Code the pack works with, quoted: Bonsai's own floor, so the pack asks for no newer
+  # one than Bonsai does (its roles' preloads and maxTurns were measured on 2.1.300: README.md); null: none of its own
+  claude_code: "2.1.294"
 # block: the pack's part of the instruction block in a project's CLAUDE.md, bonsai/block.md: four lines naming the
 # roles, the lanes and the templates. It loads in every session, so its docs stay in its own leading comment
 block: block.md
