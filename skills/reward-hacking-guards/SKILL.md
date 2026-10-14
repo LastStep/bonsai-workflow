@@ -10,7 +10,7 @@ workflow:reward-hacking-guards; preloaded by the builder and the verifier. Field
 
 The ladder, Bonsai's guard and, where the project keeps one, the ledger of `done_when` entries are what make an
 overnight session trustworthy. An agent that satisfies them without satisfying the goal has destroyed the only thing
-keeping the person from reading every diff themselves. These are not optional, and they are not negotiable by
+keeping Rohan from reading every diff himself. These are not optional, and they are not negotiable by
 argument.
 
 ## Never
@@ -30,14 +30,14 @@ argument.
   `blocked` with the refusal's text.
 - **Mark work done that a verifier has not passed** when it is big or risky (`workflow:verification-ladder`, "What
   done means"), or verify your own work.
-- **Conclude that something is fun.** That is the person's, from playing, always.
+- **Conclude that something is fun.** That is Rohan's, from playing, always.
 
 ## Instead
 
 - A red rung is the most useful output of a session. Report it with the full error.
 - A goal you cannot reach honestly is a blocked task, and blocked is a perfectly good result.
-- If a test looks genuinely wrong, do not fix it quietly: say so in the run report, leave it failing, and let a person
-  or a test-writing task decide. A wrong test everyone can see beats a right test nobody reviewed.
+- If a test looks genuinely wrong, do not fix it quietly: say so in the run report, leave it failing, and let a human
+  or a test-author task decide. A wrong test everyone can see beats a right test nobody reviewed.
 - If the `done_when` turns out to be unachievable or badly worded, say that plainly. Rewriting what you were asked to
   do so that you can claim you did it is the failure this whole file is about.
 

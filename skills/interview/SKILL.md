@@ -1,6 +1,6 @@
 ---
 name: interview
-description: "The interview after a play session: in a fresh session, the six questions in order, raw observations kept apart from interpretation, the playtest file written and tasks proposed. Open it right after the person plays, while it is fresh."
+description: "The interview after a play session: in a fresh session, the six questions in order, raw observations kept apart from interpretation, the playtest file written and tasks proposed. Open it right after Rohan plays, while it is fresh."
 ---
 
 <!-- skills/interview/SKILL.md: the orchestrator's playtest interview, loaded as workflow:interview; opened on demand.
@@ -8,25 +8,25 @@ Its file's template is workflow:playtest. Fields: README.md. -->
 
 # The interview
 
-The person just played. You have a short window while it is fresh, and what you capture is the only real signal there
-is about whether the game is any good.
+Rohan just played. You have a short window while it is fresh, and what you capture is the only real signal the studio
+gets about whether the game is any good.
 
 ## First: a fresh session
 
 Run this only in a session that built nothing. Look back over this session: if it holds any edit, any build or any
-run of the feature that was played, stop. Do not interview. Give the person the line that starts a fresh session for
+run of the feature that was played, stop. Do not interview. Give Rohan the line that starts a fresh session for
 it, and nothing else:
 
 ```bash
 claude --agent workflow:orchestrator "Interview me about the play session I just finished (skill workflow:interview)."
 ```
 
-Only a full session can put questions to the person: Claude Code removes its question tool from subagents. So this
+Only a full session can put questions to Rohan: Claude Code removes its question tool from subagents. So this
 is never a subagent's work.
 
 ## The interview
 
-Ask few questions, open ones, and shut up after each. The player is the oracle; you are the recorder.
+Ask few questions, open ones, and shut up after each. Rohan is the oracle; you are the recorder.
 
 1. What happened? Walk me through the match.
 2. Where did you stop and think — not "was it hard", where did you *hesitate*?
@@ -43,8 +43,8 @@ misunderstanding *is* the data. If he is vague, ask for the specific moment, not
 The file is a playtest (`workflow:playtest`), `<date>-<who>.md` in the folder `bonsai status --json` names for
 `playtest`.
 
-**Raw observations first, interpretation second, and never let them mix.** What the player did and said, in order, in
-their words. Quotes verbatim: the exact phrasing carries more than your summary of it.
+**Raw observations first, interpretation second, and never let them mix.** What he did and said, in order, in
+his words. Quotes verbatim: the exact phrasing carries more than your summary of it.
 
 Only then interpret, with the confidence marked. Two players hesitating in the same place is a signal. One person's
 opinion about a number is not. Say which you have.

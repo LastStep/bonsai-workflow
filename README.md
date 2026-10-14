@@ -7,8 +7,9 @@ engine reads when a project links the pack). It carries no code that runs.
 
 **Where it came from.** It is Rohan Yadav's way of working: the roles, protocols and templates of his game studio as
 they stood on 9 Oct 2026, rewritten for Bonsai's formats and commands, and redesigned on 14 Oct 2026 around six roles,
-a message format between agents and limits per role. The game wording stays (players, play sessions, "is it fun"):
-it is a game studio's workflow, and it works the same for other software.
+a message format between agents and limits per role. Its prose names Rohan where his studio's files did, and keeps
+their game wording (players, play sessions, "is it fun"): it is a game studio's workflow, and it works the same for
+other software, where Rohan reads as the person who directs the work.
 
 ## What a project gets
 

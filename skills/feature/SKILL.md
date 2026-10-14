@@ -1,12 +1,12 @@
 ---
 name: feature
-description: "The one-pager template (document kind feature): what a player gets from a feature, in their words, for the person to approve before any plan. Every field, what it may hold, and the template to copy. Use it to write or check a one-pager."
+description: "The one-pager template (document kind feature): what a player gets from a feature, in their words, for Rohan to approve before any plan. Every field, what it may hold, and the template to copy. Use it to write or check a one-pager."
 ---
 
 # The one-pager template
 
 The template of the document kind `feature`, which this pack declares in `bonsai/pack.yaml` (its folder, id pattern,
-statuses and moves). A one-pager says what a player gets from a feature, in plain words. In the full lane the person
+statuses and moves). A one-pager says what a player gets from a feature, in plain words. In the full lane Rohan
 approves it before any plan is written; its `done_when` lines become the tasks' `done_when`, and each task names it in
 its `workflow.feature` label.
 
@@ -52,7 +52,7 @@ this is not ready to be approved.
 ## What the player sees
 
 Describe it as an experience, in order, as if watching over someone's shoulder. No class names, no file paths, no
-"the system will". This is the part the person approves.
+"the system will". This is the part Rohan approves.
 
 ## Rules it introduces or changes
 
@@ -71,7 +71,7 @@ keeps one, its ledger's entries). Write them so a verifier who did not build it 
 
 What a reader will assume is included and is not. Be specific: this list is what stops scope creep during the build.
 
-## Open questions for the person
+## Open questions for Rohan
 
 - <question, with a recommendation if you have one>
 

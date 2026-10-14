@@ -1,12 +1,12 @@
 ---
 name: plan
-description: "The plan template: how one task will be built, its first part in plain words for the person to approve, the rest for the builder and the verifier. Every field, what it may hold, and the template to copy. Use it to write or check a plan."
+description: "The plan template: how one task will be built, its first part in plain words for Rohan to approve, the rest for the builder and the verifier. Every field, what it may hold, and the template to copy. Use it to write or check a plan."
 ---
 
 # The plan template
 
 The template of the document kind `plan`, which this pack declares in `bonsai/pack.yaml` (its folder, id pattern,
-statuses and moves). A plan says how one task will be built. The full lane needs one, approved by the person, before
+statuses and moves). A plan says how one task will be built. The full lane needs one, approved by Rohan, before
 code; the orchestrator writes it, its only writer, in the Plan pipeline (`workflow:lanes`).
 
 **Where it goes:** one file per plan, named after its id (`P-T-1234.md`), in the folder the project's `bonsai.yaml`
@@ -38,20 +38,20 @@ labels:
 
 # Plan: <the task's title>
 
-Two readers. **The person** reads the first part only (down to Size) and reads no code: it is in plain words. The
+Two readers. **Rohan** reads the first part only (down to Size) and reads no code: it is in plain words. The
 **builder and verifier** read the rest, and it may carry code where it helps: paths, signatures, short snippets, exact
-commands. The person writes, reviews and verifies no code, so the agents own it end to end.
+commands. Rohan writes, reviews and verifies no code, so the agents own it end to end.
 
-## For the person (plain words)
+## For Rohan (plain words)
 
 **What this will do.** One paragraph, in plain words.
 
-**Choices that are yours.** Only a real alternative that the person decides, or "none". A director-lane choice means
+**Choices that are yours.** Only a real alternative that Rohan decides, or "none". A director-lane choice means
 this plan does not go ahead: it becomes an options write-up instead.
 
 **Risk.** What could go wrong, and the point at which the task stops and reports blocked.
 
-**Size.** The estimated session length, and anything that must be set up first (a running server, an editor open).
+**Size.** The estimated session length, and anything that must be set up first (a running server, a warm Unity Editor).
 
 ## For the builder and verifier
 

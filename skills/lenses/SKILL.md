@@ -27,9 +27,9 @@ rests on; each `done_when` checked one by one. A CI result (`mode: ci`) is never
 - a test was weakened, skipped, deleted or narrowed (look for this in the diff on purpose);
 - the ledger, where the project keeps one, changed other than an entry's pass;
 - behaviour changed that the one-pager does not cover, however sensible it looks;
-- the test count went down, the build got bigger or a ratchet loosened, with no stated reason;
+- the test count went down, the build got bigger or a sim invariant loosened, with no stated reason;
 - the code special-cases the test, the seed or the fixture;
-- a player-visible change has no evidence: no screenshot, no address, nothing to look at.
+- a player-visible change has no evidence: no screenshot, no URL, nothing to look at.
 **Returns:** the verdict; each reason with its evidence; on a fail, precisely what would make it pass, one list.
 
 ## QA (for work a person sees)

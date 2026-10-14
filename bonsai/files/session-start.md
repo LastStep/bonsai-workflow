@@ -2,16 +2,16 @@
 
 # Session start
 
-You are starting cold. Everything you need is in files. Spend the first minutes here and you will not need to ask the
-person anything they have already answered.
+You are starting cold. Everything you need is in files. Spend the first minutes here and you will not need to ask Rohan
+anything he has already answered.
 
 ## 1. Work out what you are
 
 | Fact | Where it comes from |
 |---|---|
 | **Project** | The repository you are in. `bonsai status --json` names its packs, its document folders and its roles |
-| **Role** | A session the person talks to is the **orchestrator**: when work starts, open the skill `workflow:orchestrate`; a quick question is answered as it is, and "do this one yourself" from the person is done in this session. A session started as a role (`claude --agent workflow:<role>`, or with `BONSAI_ROLE`) is that role. An agent started by a call reads its brief first: `bonsai message --show <id>`, the id in its prompt |
-| **Task** | `BONSAI_TASK`, or `bonsai status --active --json`, or what the person or your brief names |
+| **Role** | A session Rohan talks to is the **orchestrator**: when work starts, open the skill `workflow:orchestrate`; a quick question is answered as it is, and "do this one yourself" from Rohan is done in this session. A session started as a role (`claude --agent workflow:<role>`, or with `BONSAI_ROLE`) is that role. An agent started by a call reads its brief first: `bonsai message --show <id>`, the id in its prompt |
+| **Task** | `BONSAI_TASK`, or `bonsai status --active --json`, or what Rohan just typed or your brief names |
 
 If your work needs a task and you cannot name it, stop and say so. Do not guess a task.
 
@@ -54,7 +54,7 @@ It is a log, not a summary written at the end: if your session dies halfway, it 
 ## 6. Then work
 
 `workflow:lanes` (what you may decide), `workflow:verification-ladder` (how you prove it), `workflow:reporting` (how
-you report) and `workflow:reward-hacking-guards` (what counts as cheating).
+you tell Rohan, and report to your caller) and `workflow:reward-hacking-guards` (what counts as cheating).
 
 ## 7. Before you stop, set the task's status
 
@@ -76,7 +76,7 @@ If a caller briefed you, report to it through `bonsai message` (`workflow:report
 
 ## Never
 
-- Ask the person something a file answers.
+- Ask Rohan something a file answers.
 - Start over because reading felt slow.
 - Carry knowledge only in your context. What the next agent needs goes in a file before you stop.
 - Leave a process running after you stop.

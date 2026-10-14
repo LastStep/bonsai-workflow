@@ -64,7 +64,7 @@ hesitating in the same place is a signal; one player's opinion about a number is
 
 - [ ] <one line each, linked to the observation that motivated it; the task's id once it is written>
 
-## The player's verdict
+## Rohan's verdict
 
 Did it feel good? What was the worst moment? What would you cut?
 ```

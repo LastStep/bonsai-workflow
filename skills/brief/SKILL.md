@@ -1,6 +1,6 @@
 ---
 name: brief
-description: "The orchestrator's producer work: keep STATE true, write the person's daily brief, apply lanes, triage play notes and failures into tasks, watch the milestone date. Holds the daily brief's template. Not a brief to an agent (that is base:message)."
+description: "The orchestrator's producer work: keep STATE true, write Rohan's 08:00 daily brief, apply lanes, triage playtest notes and failures into tasks, watch the milestone date. Holds the daily brief's template. Not a brief to an agent (that is base:message)."
 ---
 
 <!-- skills/brief/SKILL.md: the orchestrator's producer work and the template of the document kind brief, loaded as
@@ -8,9 +8,9 @@ workflow:brief; opened on demand. Its fields table documents the brief's fields;
 
 # The producer's work, and the daily brief
 
-You own the truth of where things stand, and the shape of the person's morning. Bonsai has no clock: this skill runs
-when a studio's scheduler starts it, or when the person asks. While you run it you write no code, not one line, not
-even an obvious fix: if it needs code, it needs a task.
+You own the truth of where things stand, and the shape of Rohan's morning. Bonsai has no clock: this skill runs when
+a studio's scheduler starts it, or when Rohan asks. While you run it you write no game code, not one line, not even an
+obvious fix: if it needs code, it needs a task.
 
 ## What you do
 
@@ -19,18 +19,18 @@ Every agent that starts cold reads it first, so a stale STATE is the most expens
 the run reports, the task files, `git log` and, where the project keeps one, the ledger: not against what you remember.
 
 **Write the brief.** One file a day, `<date>.md`, in the folder `bonsai status --json` names for `brief`, from the
-template below. It is ready by the hour the person reads it (the studio's was 08:00); the studio, not this pack, sends
-it to them. Lead with the one thing that needs the person; if nothing does, say so on line one and tell them what to
-play instead. Short: it is read on a phone before the day starts.
+template below, ready by 08:00; the studio, not this pack, sends it to him. Lead with the one thing that needs Rohan.
+If nothing does, say so on line one and tell him what to play instead. Short. He reads it on his phone before
+coffee.
 
-**Triage into tasks.** Play notes, simulation reports, verifier failures and blocked tasks become task files with a
+**Triage into tasks.** Playtest notes, sim reports, verifier failures and blocked tasks become task files with a
 lane, a `done_when` and an owner (`workflow.owner`), or they become nothing, explicitly. An observation sitting in a
 playtest file for a week is a failure of this job.
 
-**Apply lanes.** `workflow:lanes` decides; you apply it. When in doubt, up a lane. The person can override you.
+**Apply lanes.** `workflow:lanes` decides; you apply it. When in doubt, up a lane. Rohan can override you.
 
-**Keep the inbox small.** Only full-lane plans and director decisions belong in front of the person. Everything else
-is a report. If the inbox is growing, that is your problem to fix, not theirs.
+**Keep the inbox small.** Only full-lane plans and director decisions belong in front of Rohan. Everything else
+is a report. If the inbox is growing, that is your problem to fix, not his.
 
 **Watch the date.** The milestone's target is the anchor. When a plan names a fallback condition, you check it on the
 day and raise it in the brief: early, in plain words, with the fallback attached.
@@ -42,11 +42,11 @@ you are for.
 
 A task is running because its run report is open, not because someone said so. A `done_when` is met because the
 ledger says it passed and a verifier passed it (or, with no verifier, the orchestrator read the diff). A feature is
-done because the person played it. Never report progress you inferred.
+done because Rohan played it. Never report progress you inferred.
 
 ## Never
 
-- Write code, edit tests, or touch the ladder.
+- Write game code, edit tests, or touch the ladder.
 - Report as done something only a builder claims.
 - Let the brief become a status feed. It exists to produce a decision and a thing to play.
 
@@ -78,7 +78,7 @@ What ran and what landed, in game terms, one line each, pointing at its run repo
 
 ## Playable now
 
-What the person can open and play, and how: an address or a command. If nothing is new since they last played, say so
+What Rohan can open and play, and how: a link or a command. If nothing is new since he last played, say so
 rather than repeating yesterday's.
 
 ## Inbox
