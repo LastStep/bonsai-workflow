@@ -1,20 +1,70 @@
-# bonsai/labels.yaml: the labels this pack defines, format bonsai.labels/1. A label is a named value under a
-# document's labels: map, such as example-pack.priority: high on a note. Bonsai's engine copies these definitions
-# into a project's lock when it links the pack; bonsai check then holds every label value to its definition, and
-# agents see each description. Every label is in the pack's own namespace, its id. A definition may be added, never
-# redefined: add a label with version raised by one. Every key carries its comment; every field's full meaning and
-# allowed values: bonsai check --schema bonsai.labels.
+# bonsai/labels.yaml: the labels the workflow pack defines, format bonsai.labels/1. A label is a named value under a
+# document's labels: map, such as workflow.owner: builder on a task. Bonsai's engine copies these definitions into a
+# project's lock when it links the pack and writes one line per label into the instruction block, so every session
+# sees them; bonsai check then holds every value to its definition. Every label is in the namespace workflow, the
+# pack's id. A definition may be added, never redefined: add a label with version raised by one. Every key carries
+# its comment; every field's full meaning and allowed values: bonsai check --schema bonsai.labels.
 format: bonsai.labels/1               # the format and its version, always the first key; only bonsai.labels/1
-namespace: example-pack               # the namespace of every label here: the pack's id (bonsai/pack.yaml's id)
+namespace: workflow                   # the namespace of every label here: the pack's id (bonsai/pack.yaml's id)
 version: 1                            # this set's version, a whole number from 1; raise it by one when a label is added
 labels:                               # the definitions, one per label
-  - name: example-pack.priority       # the label: the namespace, a dot, then a lower-case name (a-z, 0-9, _)
-    kind: choice                      # choice (one of values), text, number or list
-    values: [low, normal, high]       # for choice, the allowed values; [] for any other kind
-    items: null                       # for list, what each item is (text or number); null for any other kind
-    pattern: null                     # for text, a regular expression the value matches (e.g. "^N-[0-9]{4}$"); null for none
-    max: null                         # for text, the longest value in characters, at most 300; null for none
-    kinds: [note]                     # the document kinds that may carry it: Bonsai's (task, run, state) or a pack's
-    set_by: agent                     # agent (agents write it) or outside (a program outside agent sessions does)
-    grants: false                     # true only when the value grants a right, as bonsai.allows does; false here
-    description: "How soon a person should read the note."   # one line, at most 200 characters: what agents see
+  - name: workflow.owner              # the role that owns a task's work
+    kind: choice                      # one of values
+    values: [orchestrator, builder, verifier, researcher, auditor, runner]   # the pack's six roles (pack.yaml's roles)
+    items: null                       # not a list
+    pattern: null                     # not text
+    max: null                         # not text
+    kinds: [task]                     # tasks carry it
+    set_by: agent                     # the orchestrator writes it with the task
+    grants: false                     # it grants nothing
+    description: "The role that owns the task's work."   # what agents see, one line
+  - name: workflow.model              # the Claude Code model a task's work runs on (Claude Code only)
+    kind: choice                      # one of values
+    values: [opus, sonnet, haiku, fable]   # Claude Code's model aliases, deep to fast, and fable for visual design
+    items: null                       # not a list
+    pattern: null                     # not text
+    max: null                         # not text
+    kinds: [task, run]                # tasks (the model it should run on) and run reports (the one it ran on)
+    set_by: agent                     # agents write it
+    grants: false                     # it grants nothing
+    description: "The Claude Code model the work runs on, or ran on (Claude Code only)."   # what agents see, one line
+  - name: workflow.feature            # the one-pager a task or plan belongs to
+    kind: text                        # one line of text
+    values: []                        # not a choice
+    items: null                       # not a list
+    pattern: "^F-[a-z0-9-]+$"         # a one-pager's id, the kind feature's pattern in pack.yaml
+    max: null                         # the pattern bounds it
+    kinds: [task, plan]               # tasks and plans carry it
+    set_by: agent                     # agents write it
+    grants: false                     # it grants nothing
+    description: "The one-pager (kind feature) this belongs to, by its id."   # what agents see, one line
+  - name: workflow.milestone          # the milestone a piece of work counts toward
+    kind: text                        # one line of text
+    values: []                        # not a choice
+    items: null                       # not a list
+    pattern: null                     # any name the project gives its milestones (M2, beta)
+    max: 60                           # at most 60 characters
+    kinds: [task, state, feature]     # tasks, STATE and one-pagers carry it
+    set_by: agent                     # agents write it
+    grants: false                     # it grants nothing
+    description: "The milestone this counts toward, by the project's own name for it."   # what agents see, one line
+  - name: workflow.spec               # the spec a task carries out
+    kind: text                        # one line of text
+    values: []                        # not a choice
+    items: null                       # not a list
+    pattern: "^SPEC-[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9-]+$"   # a spec's id, the kind spec's pattern in pack.yaml
+    max: null                         # the pattern bounds it
+    kinds: [task]                     # tasks carry it
+    set_by: agent                     # agents write it
+    grants: false                     # it grants nothing
+    description: "The spec (kind spec) this task carries out, by its id."   # what agents see, one line
+  - name: workflow.estimate_h         # the hours a task is expected to take
+    kind: number                      # an integer or a decimal
+    values: []                        # not a choice
+    items: null                       # not a list
+    pattern: null                     # not text
+    max: null                         # not text
+    kinds: [task]                     # tasks carry it
+    set_by: agent                     # the orchestrator writes it with the task
+    grants: false                     # it grants nothing
+    description: "The task's estimate in hours, written with the task."   # what agents see, one line

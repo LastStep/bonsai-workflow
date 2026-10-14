@@ -1,7 +1,9 @@
 {
-  "name": "example-pack",
-  "description": "The Bonsai pack template: one role, one skill and one documented template. Copy it to start a pack.",
+  "name": "workflow",
+  "description": "A way of working for Claude Code agents, as a Bonsai pack: six roles (the orchestrator you talk to, builders, verifiers and three helpers), three lanes and their pipelines, protocols as skills, and document templates.",
   "author": {
     "name": "Bonsai"
-  }
+  },
+  "repository": "https://github.com/LastStep/bonsai-workflow",
+  "license": "MIT"
 }

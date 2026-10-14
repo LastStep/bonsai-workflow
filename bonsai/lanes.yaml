@@ -1,0 +1,23 @@
+# bonsai/lanes.yaml: the lanes the workflow pack defines, format bonsai.lanes/1. A task's lane: field names one; with
+# this pack linked, every task runs in light, full or director. Bonsai's base understands two rules of a lane and no
+# more: approve_first (the task must read approved before running, verify or done) and close (who moves it to done);
+# everything else is the description, which agents read in bonsai status --json. The skill workflow:lanes says what
+# lands in each lane and which pipeline runs it. Every key carries its comment; every field's full meaning and allowed
+# values: bonsai check --schema bonsai.lanes.
+format: bonsai.lanes/1                # the format and its version, always the first key; only bonsai.lanes/1
+lanes:                                # the three lanes, loosest first
+  - name: light                       # fixes and small changes
+    approve_first: false              # no approval before work
+    close: agent                      # an agent closes it once the ladder is green and the diff was read
+    # description: what agents read about the lane, too long to share its line
+    description: "Bug fixes, tweaks, refactors, tests and docs: under about 200 changed lines, no new wire or data format, nothing a player notices. Build it, climb the ladder, land it."
+  - name: full                        # a feature
+    approve_first: true               # a person approves the plan before code
+    close: person                     # a person closes it
+    # description: what agents read about the lane, too long to share its line
+    description: "A feature: anything a player notices, or a change to a wire format, a data schema or a public contract. A person approves the one-pager and the plan before code, and closes the task."
+  - name: director                    # a decision, not code
+    approve_first: false              # no approval before the write-up: the write-up is the work
+    close: person                     # a person closes it, by choosing
+    # description: what agents read about the lane, too long to share its line
+    description: "A decision, not code: design and feel, scope, an irreversible technical choice, or whether it is good. Write the options and stop; a person chooses."
