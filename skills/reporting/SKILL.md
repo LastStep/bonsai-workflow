@@ -67,8 +67,8 @@ Each role has three limits, as its brief's `budget` gives them or else its role'
 `roles`): **minutes** since your first call or since you read your newest brief, **actions** (tool calls, refused ones
 counted) and **red runs** (failed climbs in a row; a green climb resets them). Bonsai's guard holds them:
 - **`budget-spent`:** past a limit, every call is refused but your report and reading your brief or a newer one.
-  Report what you have and what is left, status `blocked`, saying the budget is spent; the refusal names the report
-  command and any newer brief already waiting (read it). Your caller re-briefs you, hands the work on, or asks the
+  Report what you have and what is left, status `blocked`, saying the budget is spent, as one shell call holding that
+  command alone (no `;`, `&&` or pipe); the refusal names the command and any newer brief already waiting (read it). Your caller re-briefs you, hands the work on, or asks the
   person.
 - **`call-refused`:** you started an agent your role may not call (a helper calls no one; a lead calls helpers only),
   messaged another session, or started Claude Code from your shell. Hand the work back in your report.

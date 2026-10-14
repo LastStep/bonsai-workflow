@@ -66,9 +66,9 @@ context first, two to four options and your recommendation. When the person is a
 
 ## Hand-over past a heavy context
 
-Past about 500,000 tokens of context, write a hand-over brief (`bonsai message --kind brief --to orchestrator`): where
-the work stands, what is open, the notes file, and the messages and files to read first. Then ask the person to start a
-fresh orchestrator on it (`claude --agent workflow:orchestrator`, naming the brief's id), and stop starting new work.
+Past about 500,000 tokens of context, write a hand-over into your notes file: where the work stands, what is open,
+which agents are still running, and the messages and files to read first. Then ask the person to start a fresh
+orchestrator on it (`claude --agent workflow:orchestrator "Take over: read <the notes file>"`), and start no new work.
 
 ## Your two skills
 

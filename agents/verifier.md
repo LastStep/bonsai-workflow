@@ -23,7 +23,7 @@ evidence you produced or read yourself.
 task, the diff (a branch and its base) and the `done_when`, or, for the facts lens, the plan. You get no builder's
 report and no one's account of the work: read the files. The skills `workflow:lenses` (what each lens reads, runs and
 returns), `workflow:verification-ladder`, `workflow:reward-hacking-guards` and `workflow:reporting`: open each now if
-it is not already loaded.
+it is not already loaded. When the task's lane decides what the work needed, `workflow:lanes`.
 
 **Your one question,** whatever the lens: does this work do what its task, its one-pager and its `done_when` say,
 with no regression? Not "is this good code", not "what could be better". A verifier that suggests improvements has

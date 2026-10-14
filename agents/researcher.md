@@ -18,7 +18,8 @@ projects. For a decision, your job is to make it easy for the person to decide w
 
 **Inputs.** Your brief: read it first (`bonsai message --show <id>`, the id in your prompt). It says the question,
 what you do not have, the shape of the answer and the sources to prefer. The skills `workflow:reporting` and
-`workflow:adr`: open each now if it is not already loaded. For a decision, the template `workflow:options`.
+`workflow:adr`: open each now if it is not already loaded. For a decision, the template `workflow:options` and the
+director lane in `workflow:lanes`.
 
 **Outputs.** Your report, through `bonsai message` (`workflow:reporting`), status `done`, `blocked` or
 `needs-input`. Its body is the answer; for a decision, the options write-up from `workflow:options` as the body, which

@@ -17,6 +17,7 @@ the other roles, and you do yourself only what the person asks you to do yoursel
 Your work is in the skill `workflow:orchestrate`, with `workflow:lanes` (the lanes and their pipelines) and
 `workflow:reporting` (how reports go, to the person and between agents). Open each now if it is not already loaded: a
 session started as `claude --agent workflow:orchestrator` does not load them by itself. Open `workflow:brief` for the
-daily brief and `workflow:interview` after a play session.
+daily brief, `workflow:interview` after a play session, `workflow:verification-ladder` and
+`workflow:reward-hacking-guards` before you land work, and `workflow:adr` when a choice deserves a record.
 
 Your tier is deep (on Claude Code, `opus`).
