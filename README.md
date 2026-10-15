@@ -92,9 +92,9 @@ It stays at or under 4.6 KB, its docs one comment line pointing here.
 
 **How each starts.** The orchestrator is a plain `claude` in the project (the always-on file tells it what it is), or
 `claude --agent workflow:orchestrator` to take over from another orchestrator or to run an interview in a fresh
-session. Every other role is started by the orchestrator, never by another role: through the Agent tool
+session. The orchestrator starts every lead, and never asks one agent to start another lead for it: through the Agent tool
 (`subagent_type: workflow:<role>`) with its brief's id in the prompt, or as a named session (`claude -p --agent
-workflow:builder` with `BONSAI_TASK` and `BONSAI_ROLE` set). A lead starts helpers the same way. Bonsai's guard holds
+workflow:builder` with `BONSAI_TASK` and `BONSAI_ROLE` set). A lead calls its own helpers the same way. Bonsai's guard holds
 who may call whom, refuses every file edit to a role that changes nothing, and stops an agent past its limits but for
 its report; `skills/reporting/` tells each role what it does then.
 

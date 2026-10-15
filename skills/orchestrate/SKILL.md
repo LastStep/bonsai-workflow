@@ -35,7 +35,9 @@ the person says "do this one yourself", you do it in this session, by the same r
   files or folders, what it must not touch), the tools and sources, and a `budget` only where the role's default does
   not fit. Start the agent through the Agent tool (`subagent_type: workflow:<role>`, `model` where the tier differs)
   with the brief's id in its prompt, or as a named session (`claude -p --agent workflow:builder` with `BONSAI_TASK`
-  and `BONSAI_ROLE`, from its worktree). You start every role; never ask another agent to start one for you.
+  and `BONSAI_ROLE`, from its worktree). You start the leads (builder,
+  verifier) and any helper you need yourself; a lead may call its own helpers (researcher, auditor, runner) itself.
+  Never ask one agent to start another lead for you.
 - **More work for the same agent:** a newer brief in its thread, its id named in the `SendMessage` that resumes it.
   It gets a fresh window within its role's max.
 - **Reports:** read each by its id (`bonsai message --show <id>`) and the files it points to. An agent's words are
