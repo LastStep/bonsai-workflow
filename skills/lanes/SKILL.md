@@ -70,7 +70,7 @@ what it would cost to reverse each one. Not a recommendation dressed as the only
 
 As a file, never as a question buried in chat:
 
-| What | The file | the director sees |
+| What | The file | The director sees |
 |---|---|---|
 | A new feature | a one-pager (kind `feature`), at `draft` | the one-pager to approve |
 | How to build it | a plan (kind `plan`), at `draft` | the plan to approve |
@@ -79,4 +79,4 @@ As a file, never as a question buried in chat:
 
 While the director is not in the session, a question goes through `bonsai ask`. Keep the inbox small: only full-lane
 plans and director decisions belong there. Everything else is a report, not a request: the director reading fewer things is
-what keeps them reading them properly.
+what keeps them reading properly.
