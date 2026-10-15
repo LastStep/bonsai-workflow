@@ -1,6 +1,6 @@
 ---
 name: reporting
-description: "How to report: to Rohan (plain words, evidence, what did not work) and between agents (briefs and reports through bonsai message, their statuses and pointers), and what to do when your budget is spent or a call is refused. Read it before you write any report."
+description: "How to report: to the director (plain words, evidence, what did not work) and between agents (briefs and reports through bonsai message, their statuses and pointers), and what to do when your budget is spent or a call is refused. Read it before you write any report."
 ---
 
 <!-- skills/reporting/SKILL.md: workflow's reporting protocol, loaded as workflow:reporting; preloaded by every role.
@@ -8,19 +8,19 @@ Fields: README.md. -->
 
 # Reporting
 
-**Rohan writes, reviews and verifies no code.** He is the Game Director: he decides what the game is, he plays it,
-he approves plans in plain language. So the agents own the code end to end: you never lean on him to catch a code
-problem, and the verifier is the last review the code gets. What you write for him stays in plain words. What you
+**The director writes, reviews and verifies no code.** They are the Game Director: they decide what the game is, they play it,
+they approve plans in plain language. So the agents own the code end to end: you never lean on them to catch a code
+problem, and the verifier is the last review the code gets. What you write for them stays in plain words. What you
 write for agents (most of a plan, a run report's technical parts, task files, briefs) may carry code: paths,
 signatures, short snippets, exact commands.
 
-## To Rohan
+## To the director
 
 **The register.** Plain sentences, no adjective you cannot defend ("successfully", "robust", "comprehensive",
 "significantly improved"). What changed for the player first, then in the system: "two browsers can now join the same
 room with a code" before "added `RoomRegistry` to the server". Numbers, not impressions: `287 -> 294 tests`,
 `build 12.5 -> 12.9 MB`. Short by default: a run report is a page, a brief a screen; technical and design decisions
-get the full write-up, because that is what Rohan is choosing from. Lead with what he has to do; if
+get the full write-up, because that is what the director is choosing from. Lead with what they have to do; if
 nothing, say so on line one.
 
 **What every report holds:**
@@ -28,9 +28,9 @@ nothing, say so on line one.
 2. **Evidence:** ladder rungs with real output, screenshots at the game camera, test counts, the numbers before and
    after.
 3. **What did not work:** what you tried and dropped, the rung that went red twice, what is slower than it should
-   be. A report with no negatives is a press release, and it teaches Rohan to stop reading.
+   be. A report with no negatives is a press release, and it teaches the director to stop reading.
 4. **What it cost:** wall-clock time, and the session's spend where the project records it.
-5. **What is next, and what needs him.**
+5. **What is next, and what needs them.**
 
 **Honesty.** Never report a rung green unless the ladder's result says so. Never describe intended behaviour as
 observed: if you did not run it, write "not run". A deviation from the approved plan is the first line of the report:
@@ -39,7 +39,7 @@ settle it. Partial is fine and normal: say which part, and what is left.
 
 **Where reports go:** the run report (`base:run`), opened at the start and appended to; the daily brief
 (`workflow:brief`, by 08:00); a verifier's verdict, in its report, which the orchestrator copies into the run report;
-a play session's record, after Rohan plays (`workflow:interview`); an options write-up (`workflow:options`), which the
+a play session's record, after the director plays (`workflow:interview`); an options write-up (`workflow:options`), which the
 orchestrator files.
 
 ## Between agents: briefs and reports
@@ -57,11 +57,11 @@ their templates are in `base:message`.
 
   With a long body, `--body -` and a here-document whose delimiter is quoted (`<<'EOF'`).
 - **The status:** `done` (the work is done as briefed, whatever a verdict found), `blocked` (you cannot go on: the
-  full error or the blocker), `needs-input` (a choice only your caller or Rohan can make: the question, two to
+  full error or the blocker), `needs-input` (a choice only your caller or the director can make: the question, two to
   four options, the one you recommend).
 - **Pointers, not retelling:** the files that hold the result (the ladder result, the run report, a log), each a
   `--pointer`; a branch's HEAD in the body. Long output goes in a file and is pointed to, never pasted.
-- **Never pass on another agent's words as Rohan's.** Quote them with their author.
+- **Never pass on another agent's words as the director's.** Quote them with their author.
 
 ## Budgets, and what is refused
 
@@ -71,7 +71,7 @@ counted) and **red runs** (failed climbs in a row; a green climb resets them). B
 - **`budget-spent`:** past a limit, every call is refused but your report and reading your brief or a newer one.
   Report what you have and what is left, status `blocked`, saying the budget is spent, as one shell call holding that
   command alone (no `;`, `&&` or pipe); the refusal names the command and any newer brief already waiting (read
-  it). Your caller re-briefs you, hands the work on, or asks Rohan.
+  it). Your caller re-briefs you, hands the work on, or asks the director.
 - **`call-refused`:** you started an agent your role may not call (a helper calls no one; a lead calls helpers only),
   messaged another session, or started Claude Code from your shell. Hand the work back in your report.
 - **`role-writes-nothing`:** your role changes no file. Put it in your report.

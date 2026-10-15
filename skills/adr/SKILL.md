@@ -16,7 +16,7 @@ whether to write one.
 - A future agent, reading the code cold, would reasonably propose the opposite and be wrong.
 - The choice was between real alternatives, and the loser is still tempting.
 - It constrains future work: a data format, a protocol's shape, a dependency, a layering rule.
-- Rohan chose from an options write-up. The record says what he chose and why the others lost.
+- The director chose from an options write-up. The record says what they chose and why the others lost.
 
 ## Do not write one when
 
@@ -34,7 +34,7 @@ Ceremony is the failure here. Ten records nobody reads are worse than three that
 | The project's code, data, protocol or architecture, or its tooling, process and agents | a decision record (kind `decision`, template `workflow:decision`), in the folder `bonsai status --json` names for it; or the project's own decision log, where it keeps one |
 | Game design: a rule, a mechanic, a number | the design page's decision log, **not** a record |
 
-Numbers are sequential and never reused. A record starts `proposed`; Rohan accepts it. A superseded record is
+Numbers are sequential and never reused. A record starts `proposed`; the director accepts it. A superseded record is
 not deleted or rewritten: it moves to `superseded`, names the record that replaced it, and stays.
 
 ## Shape

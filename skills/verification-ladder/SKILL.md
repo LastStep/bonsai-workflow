@@ -63,10 +63,10 @@ All of these, in order (step 2 only for big or risky work):
 2. For big or risky work, a **verifier in a fresh context** checked it and passed it. Big or risky: guards, the
    ladder's proof logic, tokens and security, deploys, a public contract, and the full and director lanes. Related
    light tasks share one verifier. The rest close on the green ladder and the orchestrator's read of the diff, and the
-   run report says so (Rohan, 6 Oct).
+   run report says so (the director, 6 Oct).
 3. Where the project keeps a ledger of `done_when` entries, each entry's pass is set once the verifier passed it (by
    the orchestrator, since a verifier changes no file), or, with no verifier, once the orchestrator read the diff;
    never by the builder.
-4. For anything a player can feel: **Rohan played it.** No sim, metric or agent opinion substitutes.
+4. For anything a player can feel: **the director played it.** No sim, metric or agent opinion substitutes.
 
 Steps 1 to 3 let a task land. Only step 4 closes it.

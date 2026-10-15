@@ -1,12 +1,12 @@
 ---
 name: options
-description: "The options write-up template (document kind options): two to four real options for a decision Rohan makes, with criteria, costs, reversibility and one recommendation. Every field, what it may hold, and the template to copy. Use it in the director lane."
+description: "The options write-up template (document kind options): two to four real options for a decision the director makes, with criteria, costs, reversibility and one recommendation. Every field, what it may hold, and the template to copy. Use it in the director lane."
 ---
 
 # The options write-up template
 
 The template of the document kind `options`, which this pack declares in `bonsai/pack.yaml` (its folder, id pattern,
-statuses and moves). A write-up makes it easy for Rohan to decide well and quickly, once: it is the director
+statuses and moves). A write-up makes it easy for the director to decide well and quickly, once: it is the director
 lane's output (`workflow:lanes`), written by a researcher as its report's body and filed by the orchestrator. The
 rules that make it useful are the researcher's (`agents/researcher.md`): criteria before options, two to four real
 ones, reversibility, one recommendation and what would change it.
@@ -14,7 +14,7 @@ ones, reversibility, one recommendation and what would change it.
 **Where it goes:** one file per write-up, named after its id and a short slug (`OPT-0123-hosting.md`), in the folder
 the project's `bonsai.yaml` gives the kind `options` under `documents` (`work/options` unless the project changed
 it). Copy the template below, fill every field as the table says, and keep only the pointer comment on the first
-line: the docs stay here. Once Rohan chooses, a decision record (`workflow:decision`) says what and why.
+line: the docs stay here. Once the director chooses, a decision record (`workflow:decision`) says what and why.
 
 | Field | Meaning | Allowed values | Example |
 |---|---|---|---|
@@ -48,7 +48,7 @@ deferred.
 
 ## What matters here
 
-The two or three criteria that actually decide it, in Rohan's terms: feel, time to the playtest date, cost, how
+The two or three criteria that actually decide it, in the director's terms: feel, time to the playtest date, cost, how
 hard it is to undo. Named before the options, so the comparison is honest.
 
 ## Options

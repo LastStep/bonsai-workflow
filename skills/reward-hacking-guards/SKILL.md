@@ -10,7 +10,7 @@ workflow:reward-hacking-guards; preloaded by the builder and the verifier. Field
 
 The ladder, Bonsai's guard and, where the project keeps one, the ledger of `done_when` entries are what make an
 overnight session trustworthy. An agent that satisfies them without satisfying the goal has destroyed the only thing
-keeping Rohan from reading every diff himself. These are not optional, and they are not negotiable by
+keeping the director from reading every diff themselves. These are not optional, and they are not negotiable by
 argument.
 
 ## Never
@@ -30,7 +30,7 @@ argument.
   `blocked` with the refusal's text.
 - **Mark work done that a verifier has not passed** when it is big or risky (`workflow:verification-ladder`, "What
   done means"), or verify your own work.
-- **Conclude that something is fun.** That is Rohan's, from playing, always.
+- **Conclude that something is fun.** That is the director's, from playing, always.
 
 ## Instead
 

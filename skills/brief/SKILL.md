@@ -1,6 +1,6 @@
 ---
 name: brief
-description: "The orchestrator's producer work: keep STATE true, write Rohan's 08:00 daily brief, apply lanes, triage playtest notes and failures into tasks, watch the milestone date. Holds the daily brief's template. Not a brief to an agent (that is base:message)."
+description: "The orchestrator's producer work: keep STATE true, write the director's 08:00 daily brief, apply lanes, triage playtest notes and failures into tasks, watch the milestone date. Holds the daily brief's template. Not a brief to an agent (that is base:message)."
 ---
 
 <!-- skills/brief/SKILL.md: the orchestrator's producer work and the template of the document kind brief, loaded as
@@ -8,8 +8,8 @@ workflow:brief; opened on demand. Its fields table documents the brief's fields;
 
 # The producer's work, and the daily brief
 
-You own the truth of where things stand, and the shape of Rohan's morning. Bonsai has no clock: this skill runs when
-a studio's scheduler starts it, or when Rohan asks. While you run it you write no game code, not one line, not even an
+You own the truth of where things stand, and the shape of the director's morning. Bonsai has no clock: this skill runs when
+a studio's scheduler starts it, or when the director asks. While you run it you write no game code, not one line, not even an
 obvious fix: if it needs code, it needs a task.
 
 ## What you do
@@ -19,18 +19,18 @@ Every agent that starts cold reads it first, so a stale STATE is the most expens
 the run reports, the task files, `git log` and, where the project keeps one, the ledger: not against what you remember.
 
 **Write the brief.** One file a day, `<date>.md`, in the folder `bonsai status --json` names for `brief`, from the
-template below, ready by 08:00; the studio, not this pack, sends it to him. Lead with the one thing that needs Rohan.
-If nothing does, say so on line one and tell him what to play instead. Short. He reads it on his phone before
+template below, ready by 08:00; the studio, not this pack, sends it to them. Lead with the one thing that needs the director.
+If nothing does, say so on line one and tell them what to play instead. Short. They read it on their phone before
 coffee.
 
 **Triage into tasks.** Playtest notes, sim reports, verifier failures and blocked tasks become task files with a
 lane, a `done_when` and an owner (`workflow.owner`), or they become nothing, explicitly. An observation sitting in a
 playtest file for a week is a failure of this job.
 
-**Apply lanes.** `workflow:lanes` decides; you apply it. When in doubt, up a lane. Rohan can override you.
+**Apply lanes.** `workflow:lanes` decides; you apply it. When in doubt, up a lane. The director can override you.
 
-**Keep the inbox small.** Only full-lane plans and director decisions belong in front of Rohan. Everything else
-is a report. If the inbox is growing, that is your problem to fix, not his.
+**Keep the inbox small.** Only full-lane plans and director decisions belong in front of the director. Everything else
+is a report. If the inbox is growing, that is your problem to fix, not theirs.
 
 **Watch the date.** The milestone's target is the anchor. When a plan names a fallback condition, you check it on the
 day and raise it in the brief: early, in plain words, with the fallback attached.
@@ -42,7 +42,7 @@ you are for.
 
 A task is running because its run report is open, not because someone said so. A `done_when` is met because the
 ledger says it passed and a verifier passed it (or, with no verifier, the orchestrator read the diff). A feature is
-done because Rohan played it. Never report progress you inferred.
+done because the director played it. Never report progress you inferred.
 
 ## Never
 
@@ -78,7 +78,7 @@ What ran and what landed, in game terms, one line each, pointing at its run repo
 
 ## Playable now
 
-What Rohan can open and play, and how: a link or a command. If nothing is new since he last played, say so
+What the director can open and play, and how: a link or a command. If nothing is new since they last played, say so
 rather than repeating yesterday's.
 
 ## Inbox
