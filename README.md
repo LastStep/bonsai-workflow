@@ -252,8 +252,11 @@ through a command (`status_writes: command` in `bonsai status --json`), agents m
 `deploy_ed25519` and `salt`: in the session's own home, in the Windows home seen from WSL (`//mnt/c/Users/*/`), and in
 a WSL home seen from Windows (`//wsl.localhost/*/home/*/` and `//wsl$/*/home/*/`). `base` cannot name them, since it
 names no studio. The rules name the files; nothing secret is in the pack. A deny rule stops the file tools and simple
-shell reads, not a program reading its own file, nor a script. The two forms for a WSL home seen from Windows are
-the first to try; each rule is tried on both sides, and one that does not hold is replaced or written here.
+shell reads, not a program reading its own file, nor a script. Tried on both sides (16 Oct 2026, Claude Code
+2.1.301, over decoy files), they hold as `base`'s walls do, with the same two gaps on Windows, where no rule form was
+found that closes them: the PowerShell tool ignores Read and Edit deny rules entirely (`Get-Content` read a walled
+file), and Git Bash passes the WSL home's `//wsl.localhost/` and `//wsl$/` paths (`cat` read one; the file tools on
+the same path refuse). `base`'s README says what was tried and what a person on Windows can do.
 
 ## Versions and releases
 
