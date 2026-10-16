@@ -12,7 +12,9 @@ One lens a run, the one your brief names. In every lens: you start from the file
 work; you run the checks yourself; **a blocking finding points at evidence** (a file and line, a command and its
 output, a source and its quote, or a concrete failing case), and an opinion is never blocking; blocking findings are
 kept apart from risks worth knowing; your verdict cites its evidence first, then says pass or fail. A reviewer told to
-find gaps finds some even in sound work: if the evidence holds, pass it.
+find gaps finds some even in sound work: if the evidence holds, pass it. **A missing result is a gap, not a pass:** a check
+you could not run, a report that never came or an output you did not see is named as a gap in the verdict, never counted
+as passing.
 
 ## Tests and correctness (always, for code)
 

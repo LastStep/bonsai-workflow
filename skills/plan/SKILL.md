@@ -9,6 +9,10 @@ The template of the document kind `plan`, which this pack declares in `bonsai/pa
 statuses and moves). A plan says how one task will be built. The full lane needs one, approved by the director, before
 code; the orchestrator writes it, its only writer, in the Plan pipeline (`workflow:lanes`).
 
+**Parallel-work checkpoint:** before the approach, list which steps block the others, which workstreams are
+independent, which files or state two steps would both change, and the smallest split that is safe to run side by side.
+A plan with one step says so.
+
 **Where it goes:** one file per plan, named after its id (`P-T-1234.md`), in the folder the project's `bonsai.yaml`
 gives the kind `plan` under `documents` (`work/plans` unless the project changed it). Copy the template below, fill
 every field as the table says, and keep only the pointer comment on the first line: the docs stay here.

@@ -35,7 +35,9 @@ nothing, say so on line one.
 **Honesty.** Never report a rung green unless the ladder's result says so. Never describe intended behaviour as
 observed: if you did not run it, write "not run". A deviation from the approved plan is the first line of the report:
 what you did instead, and why. Unsure whether something works: write "unverified" and name the rung that would
-settle it. Partial is fine and normal: say which part, and what is left.
+settle it. **Grade how sure you are** on each claim that matters, with one of five words: *said* (someone told you),
+*pointed* (you read the line it rests on), *walked* (you followed the path by hand), *ran* (you ran it and saw the
+output), *reproduced* (you made it happen again, live). Partial is fine and normal: say which part, and what is left.
 
 **Where reports go:** the run report (`base:run`), opened at the start and appended to; the daily brief
 (`workflow:brief`, by 08:00); a verifier's verdict, in its report, which the orchestrator copies into the run report;

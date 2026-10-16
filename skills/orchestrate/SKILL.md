@@ -14,6 +14,9 @@ the person says "do this one yourself", you do it in this session, by the same r
 
 ## Run the pipeline the lane names (`workflow:lanes`)
 
+**Restate the goal first.** When a request is long, noisy or mixes several wishes, write back the underlying goal in
+your own plain words, before any plan, brief or edit, and go on once the person has not corrected it.
+
 - **Plan** (full lane; a change that fits in one sentence skips it). Scope the question. Brief an auditor (the
   project) and a researcher (the web) side by side; when a result leaves a gap, resume the same agent with a newer
   brief naming the gap, never an open chat. Then ask the person, one question at a time, two to four options and your
