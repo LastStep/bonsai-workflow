@@ -24,7 +24,10 @@ to now. The range is written in the file (below).
 3. Run reports and decisions of those tasks.
 4. The ladder results of those tasks, for any number you quote.
 
-A line comes from the first source that holds it. Earlier sources win over later.
+A line comes from the first source that holds it. Earlier sources win over later. Commits rarely carry a task id: match
+them to tasks by their subject and the task's title, and say in the file that this is how they were matched. A task in
+the range that changes nothing a person sees (a plan, a verifier's run) goes in one "Not shown" line at the end, so
+nothing is silently dropped.
 
 ## The rules for every form
 
@@ -34,7 +37,7 @@ A line comes from the first source that holds it. Earlier sources win over later
   Read the finished file for these before you stop.
 - **No adjective you cannot defend.** Numbers and what a person can now do.
 - **Images are checked:** each one comes from a real run, shows no private text, and its before and after are the same
-  view, size and data.
+  view and the same data. If they are not (another moment, another width), the caption says how they differ.
 - **Do not judge:** say what changed, never that it is better, nicer or fun.
 
 ## The four forms

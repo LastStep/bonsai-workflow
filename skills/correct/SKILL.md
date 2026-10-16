@@ -26,27 +26,32 @@ Only what is recorded, never memory of the work: verifier findings and fix round
 
 1. **Collect** each mistake the evidence shows: one line, with where it was seen (the run report, the commit, the
    refusal).
-2. **Group** the mistakes into classes by cause, not by wording. A class seen once is left alone and listed as
-   "seen once", so the next run can count it again.
+2. **Group** the mistakes into classes by cause, not by wording. **Seen twice** means two findings with the same cause,
+   whether in the rounds of one task or in two tasks. A class seen once is left alone and listed as "seen once", so the
+   next run can count it again.
 3. **For each class seen twice or more, choose the highest level that works.** Highest first:
    1. **A schema or a format:** the wrong thing cannot be written (a field that is required, a value from a list).
    2. **A rung or a guard:** the climb or the guard refuses it.
    3. **A check:** `bonsai check` or a script in the project reports it.
    4. **A test:** a test fails when it happens.
    5. **The pack's prose, last,** and only for a judgment call no program can make (a rule of taste, a choice of words).
-   Say why each level above the chosen one does not work here.
+   Say why each level above the chosen one does not work here. An earlier check than the one that catches it late
+   (a scan before the push, where only CI caught it) counts as a higher level. A class already fixed at a higher level
+   goes under "already closed", with the gap that remains, if any.
 4. **Prove the check on the real past mistake.** A new check is accepted only once it has been shown to fail on the
    mistake as it was made: the old commit or the old input, run through the check, and its failing output pasted. A
-   check that was only ever seen passing proves nothing. If the old mistake cannot be rebuilt, say so, and the check is
-   proposed as "unproven" with that stated.
+   check that was only ever seen passing proves nothing. If the old mistake cannot be rebuilt, or the run needs a build at an old commit
+   you have not made, name the commit and the command and mark the proposal "unproven": it is never "accepted" until
+   the failing run exists.
 5. **Write the proposals as tasks for the orchestrator** (`base:task`): for each class, the mistake, the evidence, the
-   level chosen, the check, the failing run that proves it, and what it may change. The orchestrator decides which
-   become tasks; a change to a gate (`bonsai.yaml`, a guard, the ladder) goes by the project's own rule for gates,
+   level chosen, the check, the failing run that proves it, and what it may change. A fix that is a choice only the
+   person makes (what to forbid, an irreversible change) is listed as a question needing options, not as a task. The
+   orchestrator decides which become tasks; a change to a gate (`bonsai.yaml`, a guard, the ladder) goes by the project's own rule for gates,
    never as a side effect.
 
 ## Output
 
-A list of proposals, one block per class; then the classes seen once; then the mistakes you could not class. Nothing is
+A list of proposals, one block per class; then the classes already closed and those seen once; then the mistakes you could not class. Nothing is
 edited, and no check is added by this skill: it proposes, the orchestrator tasks, a builder builds.
 
 ## Never
