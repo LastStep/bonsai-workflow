@@ -19,9 +19,9 @@ other software. Bonsai's formats call the director `person`.
 - **Three lanes and their pipelines** (`skills/lanes/`): light work runs Build; a feature (full) runs Plan, then
   Build; a decision (director) runs Decide.
 - **The protocols, as skills**: the session-start checklist every session reads (the one always-on file), and
-  `lanes`, `verification-ladder`, `reward-hacking-guards`, `reporting`, `adr` and `prototype` (a spike settles a question before the person is asked), read when a role needs them.
+  `lanes`, `verification-ladder`, `reward-hacking-guards`, `reporting`, `adr`, `prototype` (a spike settles a question before the person is asked) and `correct` (a mistake seen twice gets a check), read when a role needs them.
 - **The orchestrator's skills**: `orchestrate` (its work), `brief` (the producer's work and the person's daily brief)
-  and `interview` (after a play session). **The verifier's**: `lenses`.
+  `interview` (after a play session) and `changelog` (what changed in a range, from the project's records). **The verifier's**: `lenses`.
 - **Eight document kinds**, each with a documented template: plans, one-pagers (`feature`), decision records, options
   write-ups, specs, playtests, daily briefs and the bugs register.
 - **Six labels** (`workflow.owner`, `workflow.model`, `workflow.feature`, `workflow.milestone`, `workflow.spec`,
@@ -167,6 +167,8 @@ Each file in `agents/` and `skills/` has one row here, and each row names a file
 | `skills/feature/SKILL.md` | The template of the kind `feature`: a one-pager, what a player gets |
 | `skills/decision/SKILL.md` | The template of the kind `decision`: a decision record |
 | `skills/prototype/SKILL.md` | Observe, don't ask: when a throwaway spike settles a question, who writes it, where it lives, and where its result goes |
+| `skills/correct/SKILL.md` | A mistake seen twice fixed at the highest level that works; a new check is accepted only once shown failing on the real past mistake |
+| `skills/changelog/SKILL.md` | A changelog for a range, from the project's records: four forms, traced lines, where it is written |
 | `skills/options/SKILL.md` | The template of the kind `options`: an options write-up for the person's decision |
 | `skills/spec/SKILL.md` | The template of the kind `spec`: a design bigger than one feature |
 | `skills/playtest/SKILL.md` | The template of the kind `playtest`: one play session's record |
