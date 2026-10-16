@@ -77,6 +77,10 @@ As a file, never as a question buried in chat:
 | A choice | an options write-up (kind `options`), at `open` | the options |
 | Blocked | the task, at `blocked` | the blocker, with the full error |
 
+Observe before you ask: a question whose answer a throwaway run can show is settled by a spike first, and the director
+is given its output as the evidence for the options (`workflow:prototype`). What a spike cannot settle (taste,
+priorities, money, risk the director owns) is still asked.
+
 While the director is not in the session, a question goes through `bonsai ask`. Keep the inbox small: only full-lane
 plans and director decisions belong there. Everything else is a report, not a request: the director reading fewer things is
 what keeps them reading properly.

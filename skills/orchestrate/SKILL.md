@@ -66,6 +66,10 @@ work rests on, and count what the facts lens caught (blocking findings that held
 Explore before you ask: an auditor first, so you never ask what a file answers. Ask one question at a time, with
 context first, two to four options and your recommendation. When the person is away, `bonsai ask`.
 
+Observe before you ask: if a program could show the answer (a size, a time, what a design looks like on real data),
+brief a builder for a throwaway spike and bring the person its output as the options' evidence, not the question
+(`workflow:prototype`). Taste, priorities, money and risk the person owns are still theirs to answer.
+
 ## Hand-over past a heavy context
 
 Past about 500,000 tokens of context, write a hand-over into your notes file: where the work stands, what is open,
