@@ -25,7 +25,7 @@ other software. Bonsai's formats call the director `person`.
 - **Eight document kinds**, each with a documented template: plans, one-pagers (`feature`), decision records, options
   write-ups, specs, playtests, daily briefs and the bugs register.
 - **Six labels** (`workflow.owner`, `workflow.model`, `workflow.feature`, `workflow.milestone`, `workflow.spec`,
-  `workflow.estimate_h`) and **walls** for a studio's own secret files.
+  `workflow.estimate_h`). It declares no walls of its own.
 
 It is meant to be used with `base`, Bonsai's own pack, which holds the templates for Bonsai's documents (a task, a run
 report, STATE, a memory note, a message between agents) that these roles write.
@@ -120,7 +120,7 @@ None is copied here:
 - the labels: `bonsai/labels.yaml`;
 - the document kinds, their folders, ids, statuses and moves: `bonsai/pack.yaml`, `documents`; each kind's fields:
   its template skill's fields table;
-- the walls: `bonsai/pack.yaml`, `deny`, each rule with its `why`.
+- the walls: none of its own (`bonsai/pack.yaml`, `deny: []`); `base`'s walls hold.
 
 `bonsai check --schema bonsai.pack` (and `bonsai.labels`, `bonsai.lanes`) prints every field of those formats.
 
@@ -131,7 +131,7 @@ None is copied here:
 | `.claude-plugin/plugin.json` | The plugin manifest Claude Code reads; documented below, under "plugin.json" |
 | `agents/` | The six roles, one file each, loaded as `workflow:<name>` |
 | `skills/` | The skills, one folder each with its `SKILL.md`, to the open Agent Skills standard, loaded as `workflow:<name>` |
-| `bonsai/pack.yaml` | The Bonsai manifest (format `bonsai.pack/1`): id, version, needs, the always-on file, the walls, the document kinds and the roles with their limits |
+| `bonsai/pack.yaml` | The Bonsai manifest (format `bonsai.pack/1`): id, version, needs, the always-on file, the document kinds and the roles with their limits |
 | `bonsai/labels.yaml` | The six labels (format `bonsai.labels/1`), in the namespace `workflow` |
 | `bonsai/lanes.yaml` | The three lanes (format `bonsai.lanes/1`) |
 | `bonsai/block.md` | The pack's part of the instruction block in a project's `CLAUDE.md` |
@@ -251,15 +251,9 @@ through a command (`status_writes: command` in `bonsai status --json`), agents m
 
 ## The walls
 
-`bonsai/pack.yaml`'s `deny` stops Claude's file tools reading a studio's three secret files, `~/.trinetra/token`,
-`deploy_ed25519` and `salt`: in the session's own home, in the Windows home seen from WSL (`//mnt/c/Users/*/`), and in
-a WSL home seen from Windows (`//wsl.localhost/*/home/*/` and `//wsl$/*/home/*/`). `base` cannot name them, since it
-names no studio. The rules name the files; nothing secret is in the pack. A deny rule stops the file tools and simple
-shell reads, not a program reading its own file, nor a script. Tried on both sides (16 Oct 2026, Claude Code
-2.1.301, over decoy files), they hold as `base`'s walls do, with the same two gaps on Windows, where no rule form was
-found that closes them: the PowerShell tool ignores Read and Edit deny rules entirely (`Get-Content` read a walled
-file), and Git Bash passes the WSL home's `//wsl.localhost/` and `//wsl$/` paths (`cat` read one; the file tools on
-the same path refuse). `base`'s README says what was tried and what a person on Windows can do.
+The pack has no walls of its own: `bonsai/pack.yaml`'s `deny` is empty. `base`'s walls hold in a project linked to
+both, and `base`'s README says what they stop and what they do not. A studio that wants walls on its own files adds
+them in its own pack or in its project's Claude Code settings; this pack names no studio's files.
 
 ## Versions and releases
 

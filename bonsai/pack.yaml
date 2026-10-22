@@ -1,7 +1,7 @@
 # bonsai/pack.yaml: the workflow pack's Bonsai manifest, format bonsai.pack/1. Bonsai's engine reads it when a
 # project links the pack (bonsai init, bonsai update) and when the pack's CI runs bonsai check --pack; Claude Code
 # never reads it. It says who the pack is, what a machine needs, what the engine writes into a project (the
-# always-on file, the walls) and what the pack declares (its eight document kinds and its six roles with their
+# always-on file) and what the pack declares (its eight document kinds and its six roles with their
 # limits). Every key carries its comment, at its line's end or on the line just above; bonsai check --pack fails a
 # key without one. Every field's full meaning, type and allowed values: bonsai check --schema bonsai.pack. Text that
 # does not start with a letter is quoted (format-1 YAML). README.md says how a project takes the pack.
@@ -26,36 +26,7 @@ files:                                # the files the engine writes into a proje
     from: session-start.md            # its source, bonsai/files/session-start.md
     kind: pack                        # Bonsai's file: an edit in the project is a conflict, and update rewrites it
 hooks: []                             # no hook lines: the pack carries no code that runs
-# deny: the walls for a studio's own secret files, which base's walls do not name (base names no studio). Each file
-# has its twins: ~/ is the session's own home (on Windows the Windows home); //mnt/c/Users/*/ is the Windows home seen
-# from WSL; //wsl.localhost/*/home/*/ and //wsl$/*/home/*/ are a WSL home seen from Windows. Names only: nothing
-# secret is in the pack. README.md, "The walls", says what they stop and what they do not
-deny:
-  - rule: "Read(~/.trinetra/token)"   # the session's own home
-    why: "Agents cannot read the token kept in ~/.trinetra/token."   # the preview's sentence
-  - rule: "Read(~/.trinetra/deploy_ed25519)"   # the session's own home
-    why: "Agents cannot read the deploy key kept in ~/.trinetra/deploy_ed25519."   # the preview's sentence
-  - rule: "Read(~/.trinetra/salt)"    # the session's own home
-    why: "Agents cannot read the secret salt kept in ~/.trinetra/salt."   # the preview's sentence
-  - rule: "Read(//mnt/c/Users/*/.trinetra/token)"   # the Windows home, from WSL
-    why: "Agents in WSL cannot read the Windows home's .trinetra/token."   # the preview's sentence
-  - rule: "Read(//mnt/c/Users/*/.trinetra/deploy_ed25519)"   # the Windows home, from WSL
-    why: "Agents in WSL cannot read the Windows home's .trinetra/deploy_ed25519."   # the preview's sentence
-  - rule: "Read(//mnt/c/Users/*/.trinetra/salt)"   # the Windows home, from WSL
-    why: "Agents in WSL cannot read the Windows home's .trinetra/salt."   # the preview's sentence
-  - rule: "Read(//wsl.localhost/*/home/*/.trinetra/token)"   # a WSL home, from Windows
-    why: "Agents on Windows cannot read a WSL home's .trinetra/token through wsl.localhost."   # the preview's sentence
-  - rule: "Read(//wsl.localhost/*/home/*/.trinetra/deploy_ed25519)"   # a WSL home, from Windows
-    # why: the preview's sentence, too long to share its line
-    why: "Agents on Windows cannot read a WSL home's .trinetra/deploy_ed25519 through wsl.localhost."
-  - rule: "Read(//wsl.localhost/*/home/*/.trinetra/salt)"   # a WSL home, from Windows
-    why: "Agents on Windows cannot read a WSL home's .trinetra/salt through wsl.localhost."   # the preview's sentence
-  - rule: "Read(//wsl$/*/home/*/.trinetra/token)"   # a WSL home, from Windows, by its older name
-    why: "Agents on Windows cannot read a WSL home's .trinetra/token through wsl$."   # the preview's sentence
-  - rule: "Read(//wsl$/*/home/*/.trinetra/deploy_ed25519)"   # a WSL home, from Windows, by its older name
-    why: "Agents on Windows cannot read a WSL home's .trinetra/deploy_ed25519 through wsl$."   # the preview's sentence
-  - rule: "Read(//wsl$/*/home/*/.trinetra/salt)"   # a WSL home, from Windows, by its older name
-    why: "Agents on Windows cannot read a WSL home's .trinetra/salt through wsl$."   # the preview's sentence
+deny: []                              # no walls of its own: base's walls hold, and a studio adds its own files' walls in its own pack or settings
 # documents: the eight document kinds the pack declares, each with its template skill (workflow:<kind>; the brief's is
 # inside workflow:brief). A project keeps each kind's place in its bonsai.yaml's documents, under the kind's name.
 # Moves follow contract section 10.2: a person approves (and accepts, decides, closes or cuts); agents make the rest
