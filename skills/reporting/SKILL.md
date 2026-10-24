@@ -39,9 +39,8 @@ settle it. **Grade how sure you are** on each claim that matters, with one of fi
 *pointed* (you read the line it rests on), *walked* (you followed the path by hand), *ran* (you ran it and saw the
 output), *reproduced* (you made it happen again, live). Partial is fine and normal: say which part, and what is left.
 
-**Where reports go:** the run report (`base:run`), opened at the start and appended to; the daily brief
-(`workflow:brief`, by 08:00); a verifier's verdict, in its report, which the orchestrator copies into the run report;
-a play session's record, after the director plays (`workflow:interview`); an options write-up (`workflow:options`), which the
+**Where reports go:** the run report (`base:run`), opened at the start and appended to; a verifier's verdict,
+in its report, which the orchestrator copies into the run report; an options write-up (`workflow:options`), which the
 orchestrator files.
 
 ## Between agents: briefs and reports

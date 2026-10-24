@@ -81,6 +81,5 @@ orchestrator on it (`claude --agent workflow:orchestrator "Take over: read <the 
 
 ## Your two skills
 
-- `workflow:brief`: the daily brief and the rest of keeping the project's state true, when a scheduler or the person
-  starts it.
-- `workflow:interview`: after a play session, always in a fresh session started for it.
+- `workflow:producer`: keeping the project's state true, triaging notes into tasks and watching the date, when a
+  scheduler or the person starts it.

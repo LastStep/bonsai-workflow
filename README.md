@@ -20,10 +20,10 @@ other software. Bonsai's formats call the director `person`.
   Build; a decision (director) runs Decide.
 - **The protocols, as skills**: the session-start checklist every session reads (the one always-on file), and
   `lanes`, `verification-ladder`, `reward-hacking-guards`, `reporting`, `adr`, `prototype` (a spike settles a question before the person is asked) and `correct` (a mistake seen twice gets a check), read when a role needs them.
-- **The orchestrator's skills**: `orchestrate` (its work), `brief` (the producer's work and the person's daily brief)
-  `interview` (after a play session) and `changelog` (what changed in a range, from the project's records). **The verifier's**: `lenses`.
-- **Eight document kinds**, each with a documented template: plans, one-pagers (`feature`), decision records, options
-  write-ups, specs, playtests, daily briefs and the bugs register.
+- **The orchestrator's skills**: `orchestrate` (its work), `producer` (keeping STATE true, triage, the date)
+  and `changelog` (what changed in a range, from the project's records). **The verifier's**: `lenses`.
+- **Six document kinds**, each with a documented template: plans, one-pagers (`feature`), decision records, options
+  write-ups, specs and the bugs register.
 - **Six labels** (`workflow.owner`, `workflow.model`, `workflow.feature`, `workflow.milestone`, `workflow.spec`,
   `workflow.estimate_h`). It declares no walls of its own.
 
@@ -91,7 +91,7 @@ It stays at or under 4.6 KB, its docs one comment line pointing here.
 | Helper | `researcher`, `auditor`, `runner` | no one | nothing |
 
 **How each starts.** The orchestrator is a plain `claude` in the project (the always-on file tells it what it is), or
-`claude --agent workflow:orchestrator` to take over from another orchestrator or to run an interview in a fresh
+`claude --agent workflow:orchestrator` to take over from another orchestrator in a fresh
 session. The orchestrator starts every lead, and never asks one agent to start another lead for it: through the Agent tool
 (`subagent_type: workflow:<role>`) with its brief's id in the prompt, or as a named session (`claude -p --agent
 workflow:builder` with `BONSAI_TASK` and `BONSAI_ROLE` set). A lead calls its own helpers the same way. Bonsai's guard holds
@@ -161,8 +161,7 @@ Each file in `agents/` and `skills/` has one row here, and each row names a file
 | `skills/reporting/SKILL.md` | Reports to the person and between agents, their statuses, and what to do when a budget is spent or a call refused |
 | `skills/adr/SKILL.md` | When a choice deserves a decision record, where it goes and its shape |
 | `skills/lenses/SKILL.md` | The verifier's four lenses: tests and correctness, QA, security, facts |
-| `skills/brief/SKILL.md` | The producer's work (STATE, the daily brief, triage, lanes, the date), with the template of the kind `brief` |
-| `skills/interview/SKILL.md` | The interview after a play session, in a fresh session: its six questions and rules, the write-up, proposed tasks |
+| `skills/producer/SKILL.md` | The producer's work: STATE kept true, triage, lanes applied, the date watched |
 | `skills/plan/SKILL.md` | The template of the kind `plan`: how one task will be built |
 | `skills/feature/SKILL.md` | The template of the kind `feature`: a one-pager, what a player gets |
 | `skills/decision/SKILL.md` | The template of the kind `decision`: a decision record |
@@ -171,7 +170,6 @@ Each file in `agents/` and `skills/` has one row here, and each row names a file
 | `skills/changelog/SKILL.md` | A changelog for a range, from the project's records: four forms, traced lines, where it is written |
 | `skills/options/SKILL.md` | The template of the kind `options`: an options write-up for the person's decision |
 | `skills/spec/SKILL.md` | The template of the kind `spec`: a design bigger than one feature |
-| `skills/playtest/SKILL.md` | The template of the kind `playtest`: one play session's record |
 | `skills/bugs/SKILL.md` | The template of the kind `bugs`: the project's register of known bugs |
 
 **What each role preloads**, and why its body names those skills too: each role file lists its skills on its
@@ -189,8 +187,7 @@ the list is defined) and an example.
 
 - **A YAML file** (`pack.yaml`, `labels.yaml`, `lanes.yaml`, `pack.yml`): a short header, and a `#` comment on every
   key, at its line's end or on the line just above. `bonsai check --pack` fails a key in `bonsai/` without one.
-- **A template skill** (`plan`, `feature`, `decision`, `options`, `spec`, `playtest`, `bugs`, and `brief` after its
-  procedure): a fields table, `| Field | Meaning | Allowed values | Example |`, above its template, the first fenced
+- **A template skill** (`plan`, `feature`, `decision`, `options`, `spec` and `bugs`): a fields table, `| Field | Meaning | Allowed values | Example |`, above its template, the first fenced
   block after the table. `bonsai check --pack` holds the table and the template's fields equal, both ways, and each
   allowed-values cell that lists values to the pack's own list (a kind's statuses, the lanes, a choice label's
   values). A document made from a template keeps only the pointer comment on its first line.
