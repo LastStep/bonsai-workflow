@@ -28,10 +28,14 @@ ladder and the orchestrator's read of the diff, and the run report says which.
 
 ## The pipelines, one per lane
 
+A task reads `running` from the moment any agent starts work on it (a researcher, a verifier on a plan, a builder, the
+orchestrator writing its options or its plan), and a run report is open from then. One task runs at a time: with two
+reading `running`, Bonsai counts none as active (`workflow:orchestrate`).
+
 - **Plan** (the full lane, before Build; skipped when the change fits in one sentence): the orchestrator scopes the
   question; an auditor (the project) and a researcher (the web) look side by side, and get follow-up briefs if needed;
   The director gets questions one at a time, each with two to four options and a recommendation, never one a file
-  answers; the orchestrator writes the plan (`workflow:plan`), its only writer, its notes in one file; a verifier's
+  answers; the orchestrator writes the plan (`workflow:plan`), its only writer, its notes in the project's memory (`base:memory`); a verifier's
   facts lens checks it, every blocking finding pointing at evidence; the director approves it.
 - **Build** (the light lane, and the full lane once its plan is approved): the task; a builder, calling an auditor or
   a runner as it needs; the ladder green; verifier lenses by risk (tests and correctness for code; QA for what a person

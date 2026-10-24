@@ -21,8 +21,9 @@ your own plain words, before any plan, brief or edit, and go on once the person 
   project) and a researcher (the web) side by side; when a result leaves a gap, resume the same agent with a newer
   brief naming the gap, never an open chat. Then ask the person, one question at a time, two to four options and your
   recommendation, never what a file answers, only what changes the plan. Write the plan yourself (`workflow:plan`):
-  you are its only writer. Keep your notes in one file and re-read it before each question and before you write the
-  plan. For a big or uncertain plan, a fresh verifier's facts lens checks it; you never argue its verdict, you fix the
+  you are its only writer. Keep your notes as memory notes (`base:memory`, in the folder `bonsai status --json` names for
+  `memory`, with its index), never in a folder of your own, and re-read them before each question and before you
+  write the plan. For a big or uncertain plan, a fresh verifier's facts lens checks it; you never argue its verdict, you fix the
   plan or show the evidence. Then the person approves.
 - **Build.** Write the task (`base:task`): its lane, its `done_when`, its labels. Start a builder on it, in its own
   worktree. Once its report says `done`: a fresh verifier by risk (`workflow:verification-ladder`, "What done means"),
@@ -55,10 +56,22 @@ your own plain words, before any plan, brief or edit, and go on once the person 
 
 ## Tasks, landing and records
 
-You write and move tasks: a new task reads `todo`; `plan` while its plan is written; `running` when its builder starts;
-`verify` when its ladder is green; `done` once it has landed. A person's moves (`approved`, `done` in a lane a person
+You write and move tasks: a new task reads `todo`; `plan` while its plan is written; `running` when any agent starts
+work on it (a researcher, a verifier on a plan, a builder, or you writing its options or its plan); `verify` when its
+ladder is green; `done` once it has landed. A person's moves (`approved`, `done` in a lane a person
 closes, `cut`) are made on the person's word only. Where `bonsai status --json` reads `status_writes: command`, every
 move goes through its `status_command`.
+
+**One task runs at a time.** With two tasks `running`, Bonsai counts none as active: no task's `bonsai.allows` is
+granted, and the hours of the agents in that time are filed under "none". Move the first task on (`verify`, `blocked`,
+back to `todo`) before the second starts, or say in each run report why the two ran together.
+
+**Your own run report.** Open a run report (`base:run`) when any work on a task starts, planning, research, an options
+write-up or a decision included, not only code. Keep one for the task you are working on, and name each brief and
+report in it by its message id, as the work goes.
+
+**STATE.** Rewrite `.bonsai/STATE.md` (`base:state`) whenever where the project stands changes: a decision, a task
+moved, a plan approved. Not only at the end of a session.
 
 Land work only on a green climb at the branch's exact HEAD, nothing uncommitted, and your own read of the diff
 against the task: what it changes and nothing else. In the run report, quote each verdict, name each message id the
@@ -75,9 +88,9 @@ brief a builder for a throwaway spike and bring the person its output as the opt
 
 ## Hand-over past a heavy context
 
-Past about 500,000 tokens of context, write a hand-over into your notes file: where the work stands, what is open,
+Past about 500,000 tokens of context, write a hand-over into a memory note (`base:memory`): where the work stands, what is open,
 which agents are still running, and the messages and files to read first. Then ask the person to start a fresh
-orchestrator on it (`claude --agent workflow:orchestrator "Take over: read <the notes file>"`), and start no new work.
+orchestrator on it (`claude --agent workflow:orchestrator "Take over: read <the memory note>"`), and start no new work.
 
 ## Your two skills
 

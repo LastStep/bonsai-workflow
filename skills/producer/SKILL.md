@@ -35,7 +35,8 @@ silently; that is what you are for.
 
 ## How you decide what is true
 
-A task is running because its run report is open, not because someone said so. A `done_when` is met because the
+A task is running because its run report is open, not because someone said so. Rewrite STATE (`base:state`) whenever
+where the project stands changes, and keep facts between sessions in the project's memory (`base:memory`). A `done_when` is met because the
 ledger says it passed and a verifier passed it (or, with no verifier, the orchestrator read the diff). A feature is
 done because the director looked at it or played it. Never report progress you inferred.
 
