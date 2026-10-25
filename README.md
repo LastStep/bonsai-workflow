@@ -283,8 +283,8 @@ guard lines, which the pack's roles bring, are Bonsai's, not the pack's.
   missing `version`. It needs no Claude login, so it runs in CI with no secret.
 - `sh ci/check.sh release <tag> <folder>`: fails unless the tag is `v` and `pack.yaml`'s `version`.
 
-`.github/workflows/pack.yml` runs on every push and pull request: `check` on Linux and Windows with a `bonsai` built
-from the Bonsai commit it pins (`BONSAI_COMMIT`, one that reads `roles` and the protocols folder); `validate` on Linux
+`.github/workflows/pack.yml` runs on every push and pull request: `check` on Linux and Windows with the `bonsai` of
+the Bonsai release it pins (`BONSAI_VERSION`, its archive checked by its SHA-256 before it runs); `validate` on Linux
 with the Claude Code it pins; then `release`, which checks the tag the version needs on every push and, on a `v*` tag
 only, makes the GitHub release. Either pin moves only on purpose, in a commit of its own.
 
