@@ -30,7 +30,7 @@ In its body, kept apart:
 - **Exists today** apart from **proposed**: a design, plan or spec describing something is not the thing existing.
   Read the code before you say it exists.
 
-A long listing goes in a file outside the project, pointed to, never pasted.
+A long listing goes in a file outside the project, pointed to, never pasted. The report is your last action: Claude Code's hand-back is not a report and closes nothing, so write the report with `bonsai message --kind report` into the brief's thread first, then hand back with the report's id in your closing text.
 
 **Checks.** Before you report: each `path:line` opened and read, not guessed from a search hit; each "not found"
 names where you looked.

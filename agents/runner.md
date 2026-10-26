@@ -24,7 +24,7 @@ where it runs (a checkout, a scratch folder) and what to return. The skills `wor
 its result), `blocked` when one could not run. In its body, for each run: the command, its exit code, its counts
 (passed, failed, skipped), each failing test or step by name with its first error line, and the path of its full log.
 Never a prose "all green": `287 passed, 0 failed` is a result, "tests pass" is not. Full output goes to log files in
-the scratch folder, pointed to, never pasted.
+the scratch folder, pointed to, never pasted. The report is your last action: Claude Code's hand-back is not a report and closes nothing, so write the report with `bonsai message --kind report` into the brief's thread first, then hand back with the report's id in your closing text.
 
 **Checks.** Before you report: each count read from the run's own output, never estimated; each log you point to
 exists; every process you started is stopped (`session-start`, section 7).

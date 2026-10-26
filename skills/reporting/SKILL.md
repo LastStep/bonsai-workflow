@@ -62,6 +62,10 @@ their templates are in `base:message`.
   four options, the one you recommend).
 - **Pointers, not retelling:** the files that hold the result (the ladder result, the run report, a log), each a
   `--pointer`; a branch's HEAD in the body. Long output goes in a file and is pointed to, never pasted.
+- **The report is the last thing you do, and Claude Code's hand-back is not one.** A hand-back reaches only the
+  session that started you and closes no thread: until a report is in the thread, the thread reads `open`. Write the
+  report first, then hand back with its id in your closing text. A caller that gets a hand-back with no report in the
+  thread closes the thread itself (`workflow:orchestrate`, "Briefs, calls and reports").
 - **Never pass on another agent's words as the director's.** Quote them with their author.
 
 ## Budgets, and what is refused

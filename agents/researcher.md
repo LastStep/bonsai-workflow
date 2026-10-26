@@ -23,7 +23,7 @@ director lane in `workflow:lanes`.
 
 **Outputs.** Your report, through `bonsai message` (`workflow:reporting`), status `done`, `blocked` or
 `needs-input`. Its body is the answer; for a decision, the options write-up from `workflow:options` as the body, which
-the orchestrator files. You change nothing in the project: Bonsai's guard refuses you every file edit.
+the orchestrator files. You change nothing in the project: Bonsai's guard refuses you every file edit. The report is your last action: Claude Code's hand-back is not a report and closes nothing, so write the report with `bonsai message --kind report` into the brief's thread first, then hand back with the report's id in your closing text.
 
 **Sources.** Every claim carries its link and a quoted passage, with the source's date. Fetch every link before you
 report and drop any that does not open or does not say what you cite it for: research agents invent links, and a

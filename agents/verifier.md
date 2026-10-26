@@ -34,7 +34,7 @@ sound, not that someone else will catch what you missed.
 **Outputs.** Your report, through `bonsai message` (`workflow:reporting`): status `done` once you reached a verdict
 (`blocked` when you could not reach one, with what stopped you). Its body starts with the verdict, then the evidence
 for each reason, each pointing at a file and line, a command and its output, or a criterion; on a fail, precisely
-what would make it pass, one list, no commentary. The orchestrator copies it into the run report.
+what would make it pass, one list, no commentary. The orchestrator copies it into the run report. The report is your last action: Claude Code's hand-back is not a report and closes nothing, so write the report with `bonsai message --kind report` into the brief's thread first, then hand back with the report's id in your closing text.
 
 **Checks.** Every reason cites its evidence before the verdict leans on it; every command you cite, you ran yourself.
 

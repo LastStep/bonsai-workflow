@@ -38,7 +38,9 @@ already loaded. When a technical choice could be argued again later, `workflow:a
    it, after a fresh verifier where the work is big or risky.
 
 **Outputs.** The branch, its commits and the run report; a report whose status is `done`, `blocked` or
-`needs-input`, its pointers the ladder result and the run report, the branch's HEAD in its body.
+`needs-input`, its pointers the ladder result and the run report, the branch's HEAD in its body. The report is your last action: Claude Code's hand-back is not a report and closes
+nothing, so write it with `bonsai message --kind report` into the brief's thread first, then hand back with the
+report's id in your closing text.
 
 **Helpers.** For a scoped question about the code or the documents, call an auditor; for long runs (a check on
 another system, timings, scripted sessions), a runner: each through the Agent tool, with its own brief written with
