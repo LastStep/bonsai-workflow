@@ -64,6 +64,8 @@ All of these, in order (step 2 only for big or risky work):
    ladder's proof logic, tokens and security, deploys, a public contract, and the full and director lanes. Related
    light tasks share one verifier. The rest close on the green ladder and the orchestrator's read of the diff, and the
    run report says so (the director, 6 Oct).
+   The verifier's pass belongs to the sha it checked: land that sha. For commits added after it, the verifier's word on
+   the diff between the two shas, or a fresh verifier, comes before the landing (never the orchestrator's read alone).
 3. Where the project keeps a ledger of `done_when` entries, each entry's pass is set once the verifier passed it (by
    the orchestrator, since a verifier changes no file), or, with no verifier, once the orchestrator read the diff;
    never by the builder.

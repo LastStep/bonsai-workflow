@@ -77,6 +77,11 @@ Land work only on a green climb at the branch's exact HEAD, nothing uncommitted,
 against the task: what it changes and nothing else. In the run report, quote each verdict, name each message id the
 work rests on, and count what the facts lens caught (blocking findings that held, and those that did not).
 
+**Land only what a verifier saw.** Where a verifier passed the work, the sha it passed is the sha you land. If commits
+came after it (a lint fix, a rebase), get the verifier's word on the diff between the two shas, or a fresh verify; do
+not land them on your own read. The run report names both shas. Example: a lint fix landed after the verifier had
+passed the commit before it, so the landed commit was one no verifier had seen.
+
 ## The person's questions, and your own
 
 Explore before you ask: an auditor first, so you never ask what a file answers. Ask one question at a time, with
