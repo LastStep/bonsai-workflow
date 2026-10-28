@@ -9,9 +9,9 @@ format: bonsai.pack/1                 # the format and its version, always the f
 # id: the pack's id, equal to "name" in .claude-plugin/plugin.json; its roles and skills load as workflow:<name>,
 # e.g. workflow:builder, workflow:lanes; its labels are named workflow.<name>
 id: workflow
-# version: the pack's version, quoted, as X.Y.Z; a release tag must be "v" and this (v1.0.0). plugin.json never
+# version: the pack's version, quoted, as X.Y.Z; a release tag must be "v" and this (v1.0.1). plugin.json never
 # carries one: a project pins the pack by commit, and that commit is the version Claude Code sees
-version: "1.0.0"
+version: "1.0.1"
 needs:                                # what a machine needs for the pack; bonsai status --json lists each
   # claude_code: the oldest Claude Code the pack works with, quoted: Bonsai's own floor, so the pack asks for no newer
   # one than Bonsai does (its roles' preloads and maxTurns were measured on 2.1.300: README.md); null: none of its own
