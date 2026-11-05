@@ -22,7 +22,7 @@ line: the docs stay here. Once the director chooses, a decision record (`workflo
 | `title` | The decision, phrased as a question | text, one line | `Where should the game server run?` |
 | `lane` | The lane: a write-up is director-lane work | `light`, `full` or `director`, the pack's lanes (bonsai/lanes.yaml); always director here | `director` |
 | `status` | Where it stands; a new write-up starts at the first status. The person decides; agents defer one nothing waits on, and open it again | `open`, `decided`, `deferred` | `open` |
-| `author` | The role that wrote it | a role in `bonsai/pack.yaml`, the researcher's as a rule | `researcher` |
+| `author` | The role whose text it is (the orchestrator files it, since a researcher changes no file) | a role in `bonsai/pack.yaml`, the researcher's as a rule | `researcher` |
 | `created` | The day it was started | a date, `YYYY-MM-DD` | `2026-10-16` |
 | `decided` | The day the person chose, set by that move | a date, or `null` until then | `null` |
 | `chosen` | The option the person chose, by its letter | a letter, or `null` until then | `null` |

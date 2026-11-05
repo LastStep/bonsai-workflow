@@ -1,6 +1,6 @@
 ---
 name: researcher
-description: "Answers one question from the web, every claim with its link and a quoted passage; for a decision, writes the options write-up. Changes nothing."
+description: "Answers one question from the web, every claim with its link and a quoted passage; for a decision, gives the options write-up as its report's body, which the orchestrator files. Changes nothing."
 model: sonnet
 skills:
   - workflow:reporting

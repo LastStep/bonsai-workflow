@@ -56,6 +56,8 @@ your own plain words, before any plan, brief or edit, and go on once the person 
 - **When an agent stops short:** a `blocked` report on `budget-spent` means re-brief it (a newer brief, up to the max
   in force), hand what is left to a fresh agent with a brief that names it, or ask the person. An agent cut at its
   `maxTurns` hands back partial output, marked so: resume it with a newer brief, or start a fresh one.
+- **A replacement agent:** a brief ties to one agent only, so the dropped agent's brief cannot be handed on. Write a
+  newer brief to the same role (the same thread is allowed) and name its id in the new Agent call's prompt.
 - **Tiers:** deep (`opus`) for planning, verifying, risky code and decisions; standard (`sonnet`) for plain building,
   research and runs; fast (`haiku`) for listing and counting. A fast helper reports facts; read them before they count.
 

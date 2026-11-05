@@ -29,7 +29,8 @@ ladder and the orchestrator's read of the diff, and the run report says which.
 ## The pipelines, one per lane
 
 A task reads `running` from the moment any agent starts work on it (a researcher, a verifier on a plan, a builder, the
-orchestrator writing its options or its plan), and a run report is open from then. One task runs at a time: with two
+orchestrator writing its options or its plan), and the orchestrator's run report is open from then (a role that writes
+nothing opens none: its report is its record, which the orchestrator copies in). One task runs at a time: with two
 reading `running`, Bonsai counts none as active (`workflow:orchestrate`).
 
 - **Plan** (the full lane, before Build; skipped when the change fits in one sentence): the orchestrator scopes the
