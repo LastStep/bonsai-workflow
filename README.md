@@ -22,8 +22,8 @@ other software. Bonsai's formats call the director `person`.
   `lanes`, `verification-ladder`, `reward-hacking-guards`, `reporting`, `adr`, `prototype` (a spike settles a question before the person is asked) and `correct` (a mistake seen twice gets a check), read when a role needs them.
 - **The orchestrator's skills**: `orchestrate` (its work), `producer` (keeping STATE true, triage, the date)
   and `changelog` (what changed in a range, from the project's records). **The verifier's**: `lenses`.
-- **Six document kinds**, each with a documented template: plans, one-pagers (`feature`), decision records, options
-  write-ups, specs and the bugs register.
+- **Five document kinds**, each with a documented template: plans, one-pagers (`feature`), decision records, options
+  write-ups and specs. Bugs are Bonsai's own documents from Bonsai 1.1.0 (`base:bug`); the pack's `bugs` skill points there.
 - **Six labels** (`workflow.owner`, `workflow.model`, `workflow.feature`, `workflow.milestone`, `workflow.spec`,
   `workflow.estimate_h`). It declares no walls of its own.
 
@@ -170,7 +170,7 @@ Each file in `agents/` and `skills/` has one row here, and each row names a file
 | `skills/changelog/SKILL.md` | A changelog for a range, from the project's records: four forms, traced lines, where it is written |
 | `skills/options/SKILL.md` | The template of the kind `options`: an options write-up for the person's decision |
 | `skills/spec/SKILL.md` | The template of the kind `spec`: a design bigger than one feature |
-| `skills/bugs/SKILL.md` | The template of the kind `bugs`: the project's register of known bugs |
+| `skills/bugs/SKILL.md` | A pointer to `base:bug`: bugs are Bonsai's own documents from Bonsai 1.1.0, so the pack declares no `bugs` kind and holds no template for one |
 
 **What each role preloads**, and why its body names those skills too: each role file lists its skills on its
 `skills:` line by the plugin's name (`workflow:lanes`). Measured on Claude Code 2.1.300: a role started as a subagent
@@ -187,7 +187,7 @@ the list is defined) and an example.
 
 - **A YAML file** (`pack.yaml`, `labels.yaml`, `lanes.yaml`, `pack.yml`): a short header, and a `#` comment on every
   key, at its line's end or on the line just above. `bonsai check --pack` fails a key in `bonsai/` without one.
-- **A template skill** (`plan`, `feature`, `decision`, `options`, `spec` and `bugs`): a fields table, `| Field | Meaning | Allowed values | Example |`, above its template, the first fenced
+- **A template skill** (`plan`, `feature`, `decision`, `options` and `spec`): a fields table, `| Field | Meaning | Allowed values | Example |`, above its template, the first fenced
   block after the table. `bonsai check --pack` holds the table and the template's fields equal, both ways, and each
   allowed-values cell that lists values to the pack's own list (a kind's statuses, the lanes, a choice label's
   values). A document made from a template keeps only the pointer comment on its first line.
@@ -254,6 +254,12 @@ them in its own pack or in its project's Claude Code settings; this pack names n
 
 ## Versions and releases
 
+- **From 1.1.0 the pack needs base 1.1.0 and Bonsai 1.1.0.** Bugs became Bonsai's own documents there (one file each,
+  `bonsai bug`, a generated page; `base:bug`), so this pack no longer declares the `bugs` kind. The pack format has no
+  field for needing another pack or a Bonsai version (`needs` holds only `claude_code`), so the need is stated here and
+  in `CHANGELOG.md`, and the CI's pin (`BONSAI_VERSION` in `.github/workflows/pack.yml`) moves to Bonsai 1.1.0 with the release, so the CI checks the pack with that `bonsai`. A project on Bonsai
+  1.0.3 that takes the pack early loses nothing: its register is still a plain file, only no longer listed in `status`.
+  Take Bonsai first, then base, then this pack (`bonsai pack set --all`).
 - **A project pins the pack by commit.** `bonsai.yaml` names a tag or commit; Bonsai's lock records the 40-character
   commit and refuses a tag that later moves. The commit is the version Claude Code sees: with a `version` in
   `plugin.json`, Claude Code would keep each machine on its cached copy whatever the commit, so `plugin.json` never
