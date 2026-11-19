@@ -1,51 +1,25 @@
 ---
 name: bugs
-description: "The bugs register template (document kind bugs): the one file of known bugs someone has seen or proven, open and fixed. Its fields, its tables, and the template to copy. Use it to start the register, or to add or close a bug."
+description: "Where bugs went: from Bonsai 1.1.0 a bug is Bonsai's own document, one file each, filed and moved with bonsai bug, and its template is base's bug skill (base:bug). Open it only to be sent there."
 ---
 
-# The bugs register template
+<!-- skills/bugs/SKILL.md (workflow:bugs): a pointer, no template. This pack declared a document kind `bugs`, one
+hand-kept register file, until its release 1.0.2; from Bonsai 1.1.0 and base 1.1.0 the kinds `bug` (one file per bug)
+and `bugs` (the generated page) are Bonsai's own, so the pack no longer declares one and holds no template for it. The
+skill stays so that a session that still names `workflow:bugs` finds where the text went. Frontmatter fields:
+README.md, "Skill files". -->
 
-The template of the document kind `bugs`, which this pack declares in `bonsai/pack.yaml`: one file per project, with
-no id and no statuses of its own. The register holds the bugs someone has **seen or proven** and nobody has fixed yet,
-and those fixed since. What goes wrong comes first, then where it lives and where it was found.
+# Bugs are Bonsai's own documents
 
-**Where it goes:** the one file the project's `bonsai.yaml` gives the kind `bugs` under `documents` (`work/bugs.md`
-unless the project changed it). Copy the template below once, when the first bug is found, fill every field as the
-table says, and keep only the pointer comment on the first line: the docs stay here.
+Open **`base:bug`**. It holds the bug file's fields and an example, every `bonsai bug` subcommand, the generated bugs
+page, and the steps that move an old hand-kept register (the one this pack's `bugs` template made) to bug files.
 
-| Field | Meaning | Allowed values | Example |
-|---|---|---|---|
-| `title` | The register's title | text, one line | `Known bugs` |
-| `updated` | The day a row was last added or moved | a date, `YYYY-MM-DD` | `2026-10-16` |
+In short, and only to point the way:
+- **File a bug:** `bonsai bug add --title "<what goes wrong>" --by <role>@<task>`; **move it:** `bonsai bug fix <id>
+  --commit <sha>`, `wontfix`, `watch` or `reopen`. **`bonsai bug` is the one way a bug's status changes**, in every
+  project; never edit a status line or the generated page by hand.
+- **A design question is not a bug:** it goes to the person (`workflow:lanes`).
+- **A project with a register kept by hand** is left as it is until its own agent moves it by `base:bug`'s last section;
+  `bonsai check` names it with the warning `bugs-not-moved`.
 
-**The rows.** Each bug is a row of the Open table: its id (`BUG-` and three digits, the next free one, never reused),
-what goes wrong in plain words, where it lives (a file and the function, with the commit the line was read at: code
-moves, so name the function too) and who or what found it (a task, a run report, a playtest). **Adding one:** the next
-free id, plain words first, a source someone can open. **Fixing one:** move its row to Fixed with the commit and the
-task, never delete it. A design question is not a bug: it goes to the person (`workflow:lanes`).
-
-```markdown
----
-title: Known bugs   # the bugs register; every field and how to fill it: skill workflow:bugs
-updated: <YYYY-MM-DD>
----
-
-# Known bugs
-
-The defects someone has seen or proven and nobody has fixed yet. How to add or fix one: skill workflow:bugs.
-
-## Open
-
-| Id | What goes wrong | Where | Found by |
-|---|---|---|---|
-| **BUG-001** | <what goes wrong, in plain words> | <file, function, commit> | <task, run report or playtest> |
-
-## Fixed
-
-| Id | What went wrong | Fixed in | Task |
-|---|---|---|---|
-
-## Known, not bugs
-
-Behaviour that looks wrong and is meant, so nobody files it.
-```
+Needs Bonsai 1.1.0 and base 1.1.0 (`bonsai --version`).

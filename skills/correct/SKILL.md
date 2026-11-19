@@ -20,7 +20,7 @@ fixed where it can no longer happen, or at least where something fails when it d
 ## The evidence it reads
 
 Only what is recorded, never memory of the work: verifier findings and fix rounds in the run reports, reverts and
-"fix" commits in the log of the repository, guard and ladder refusals in the log (`bonsai logs`), bugs in the register.
+"fix" commits in the log of the repository, guard and ladder refusals in the log (`bonsai logs`), bugs (`bonsai bug list`, `base:bug`).
 
 ## The steps
 

@@ -1,7 +1,7 @@
 # bonsai/pack.yaml: the workflow pack's Bonsai manifest, format bonsai.pack/1. Bonsai's engine reads it when a
 # project links the pack (bonsai init, bonsai update) and when the pack's CI runs bonsai check --pack; Claude Code
 # never reads it. It says who the pack is, what a machine needs, what the engine writes into a project (the
-# always-on file) and what the pack declares (its six document kinds and its six roles with their
+# always-on file) and what the pack declares (its five document kinds and its six roles with their
 # limits). Every key carries its comment, at its line's end or on the line just above; bonsai check --pack fails a
 # key without one. Every field's full meaning, type and allowed values: bonsai check --schema bonsai.pack. Text that
 # does not start with a letter is quoted (format-1 YAML). README.md says how a project takes the pack.
@@ -27,8 +27,9 @@ files:                                # the files the engine writes into a proje
     kind: pack                        # Bonsai's file: an edit in the project is a conflict, and update rewrites it
 hooks: []                             # no hook lines: the pack carries no code that runs
 deny: []                              # no walls of its own: base's walls hold, and a studio adds its own files' walls in its own pack or settings
-# documents: the six document kinds the pack declares, each with its template skill (workflow:<kind>). A project keeps each kind's place in its bonsai.yaml's documents, under the kind's name.
-# Moves follow contract section 10.2: a person approves (and accepts, decides, closes or cuts); agents make the rest
+# documents: the five document kinds the pack declares, each with its template skill (workflow:<kind>). A project keeps each kind's place in its bonsai.yaml's documents, under the kind's name.
+# Moves follow contract section 10.2: a person approves (and accepts, decides, closes or cuts); agents make the rest.
+# Bugs are not declared here: from Bonsai 1.1.0 the bug and bugs kinds are Bonsai's own (skill base:bug)
 documents:
   - kind: plan                        # how a task will be built, for the person to approve: skill workflow:plan
     path: work/plans                  # its default folder, one file per plan, named after its id (P-T-1234.md)
@@ -100,15 +101,6 @@ documents:
     stamp:                            # fields set to the day's date when a spec reaches a status
       approved: approved              # approved: the day the person approved it
     task_field: null                  # a spec belongs to no one task
-  - kind: bugs                        # the project's register of known bugs, one file: skill workflow:bugs
-    path: null                        # one file, not a folder
-    file: work/bugs.md                # its default file
-    id: null                          # the file holds no id of its own; each bug's id is a row in it
-    statuses: []                      # no statuses
-    person: []                        # no moves
-    agent: []                         # no moves
-    stamp: {}                         # no dates set by a move
-    task_field: null                  # the register belongs to no one task
 protected: []                         # no protected paths of the pack's own; bonsai.yaml names the project's
 # roles: the six roles, each with its file agents/<name>.md (loaded as workflow:<name>) and its limits. Each limit
 # has a default (what an agent of the role gets when its brief names none) and a max (the most a brief may give it),
