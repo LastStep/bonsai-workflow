@@ -3,11 +3,11 @@
 What changed in the workflow pack, release by release. Earlier releases (1.0.0 to 1.0.2) are described in their GitHub
 releases. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [1.1.0] - YYYY-MM-DD
+## [1.1.0] - 2026-11-24
 
 > **Needs base 1.1.0 and Bonsai 1.1.0.** The pack format has no field for needing another pack or a Bonsai version
 > (`needs` holds only `claude_code`), so the need is stated here and in README.md. Take Bonsai first, then base, then this
-> pack (`bonsai pack set --all`). The date is written at the release.
+> pack (`bonsai pack set --all`).
 
 ### Changed
 - **The pack no longer declares a `bugs` document kind.** Bugs are Bonsai's own documents from Bonsai 1.1.0: one file
@@ -19,6 +19,6 @@ releases. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.
 - **Every mention of `workflow:bugs` is rewritten:** the block names `bonsai bug` and `base:bug`; the `correct` skill
   reads bugs by `bonsai bug list`. The README counts five document kinds.
 
-### Not changed
-- The pack's version and its CI's pin of Bonsai (`BONSAI_VERSION`) move at the release, after Bonsai 1.1.0 and base
-  1.1.0 are tagged.
+### Release
+- The pack is at version 1.1.0, and its CI checks with Bonsai 1.1.0's `bonsai` (`BONSAI_VERSION`, its archives
+  pinned by SHA-256).
